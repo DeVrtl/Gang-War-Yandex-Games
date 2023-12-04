@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb2e220ec118c9b458ac30b954ed0891, type: 3}
+  m_Name: UnitUIConfig
+  m_EditorClassIdentifier: 
+  <UitSelectionButton>k__BackingField: {fileID: 7505886574079401105, guid: 80c9efdc29a51f54e819370aa6a2d4d6, type: 3}
+  <SmgUnit>k__BackingField: {fileID: 4181632486781916927, guid: 840ade2b4375bdd48b457d2f3e2fb1c3, type: 3}
+  <ShotgunUnit>k__BackingField: {fileID: 9208324230308514310, guid: 940d70a2d59d734469143345ae9fa6df, type: 3}
+  <GranadeLauncherUnit>k__BackingField: {fileID: 6063588998089801066, guid: 309463ac3e8c61a4cbac73bc728a7a53, type: 3}
+  _smgIcon: {fileID: 21300000, guid: 8d0f39de39e50204e9ace05e7a204b8c, type: 3}
+  _shotgunIcnon: {fileID: 21300000, guid: 853ba631ef1aded4da3b93143cde6cd8, type: 3}
+  _newShotGunIcon: {fileID: 21300000, guid: 0f4767e44e31b4149ab529142f27eb65, type: 3}
+  _granadeLauncherIcon: {fileID: 21300000, guid: aa21e29c2867e0f4eb8e71c819ed4e64, type: 3}
+  _newGranadeLauncherIcon: {fileID: 21300000, guid: 74298600e34e00e4c8074cb7ece037a7, type: 3}
+  _smgDecription: SMG
+  _shotgunDecription: SHOTGUN
+  _granadeLauncherDecription: GRANADE LAUNCHER
