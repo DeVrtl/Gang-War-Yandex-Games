@@ -1,34 +1,33 @@
+using GangWar.BattleSystem;
+using GangWar.UI.HealthBar;
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
-[RequireComponent(typeof(Unit))]
-public class UnitHealth : Health
+namespace GangWar.Unit
 {
-    [SerializeField] private HealthBarFader _fader;
-
-    private Unit _unit;
-
-    public event UnityAction Died;
-
-    private void Awake()
+    [RequireComponent(typeof(Unit))]
+    public class UnitHealth : Health
     {
-        _unit = GetComponent<Unit>();   
-    }
+        [SerializeField] private HealthBarFader _fader;
+        
+        public bool IsDead { get; private set; } = false;
 
-    protected override void CheackStatus()
-    {
-        if (HealthAmount <= 0)
+        public event Action Died;
+
+        protected override void CheackStatus()
         {
-            gameObject.SetActive(false);
-            _unit.MyCell.FreeCell();
-            Died?.Invoke();
+            if (HealthAmount <= 0)
+            {
+                IsDead = true;
+                Died?.Invoke();
+                gameObject.SetActive(false);
+            }
         }
-    }
 
-    public override void TakeDamage(int amount)
-    {
-        base.TakeDamage(amount);
-
-        _fader.FadeIn();
+        public override void TakeDamage(int amount)
+        {
+            base.TakeDamage(amount);
+            _fader.FadeIn();
+        }
     }
 }

@@ -1,23 +1,26 @@
-using UnityEngine.Events;
+using System;
 using UnityEngine;
 
-public class Pause : MonoBehaviour
+namespace GangWar.UI.Pause
 {
-    private const float MinTime = 0f;
-    private const float MaxTime = 1f;
-
-    public event UnityAction GamePaused;
-    public event UnityAction GameUnPaused;
-
-    public void Enable()
+    public class Pause : MonoBehaviour
     {
-        Time.timeScale = MinTime;
-        GamePaused?.Invoke();
-    }
+        private const float MinTime = 0f;
+        private const float MaxTime = 1f;
 
-    public void Disable()
-    {
-        Time.timeScale = MaxTime;
-        GameUnPaused?.Invoke();
+        public event Action GamePaused;
+        public event Action GameUnPaused;
+
+        public void Enable()
+        {
+            Time.timeScale = MinTime;
+            GamePaused?.Invoke();
+        }
+
+        public void Disable()
+        {
+            Time.timeScale = MaxTime;
+            GameUnPaused?.Invoke();
+        }
     }
 }

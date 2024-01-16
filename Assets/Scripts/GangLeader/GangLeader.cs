@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class GangLeader : MonoBehaviour
+namespace GangWar.GangLeader
 {
+    public class GangLeader : MonoBehaviour
+    {
 
+    }
 }

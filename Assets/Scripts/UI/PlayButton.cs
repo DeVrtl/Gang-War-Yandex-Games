@@ -1,44 +1,64 @@
+using GangWar.Cinemachine;
+using GangWar.UI.UnitPurchase;
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
-public class PlayButton : MonoBehaviour
+namespace GangWar.UI
 {
-    [SerializeField] private CinemachineSwitcher _switcher;
-    [SerializeField] private FreeUnitButton _freeUnit;
-    [SerializeField] private BuyUnitButton _buyUnit;
-
-    private Button _button;
-
-    public bool IsGameStarted { get; private set; } = false;
-
-    public event UnityAction GameStarted;
-
-    private void OnEnable()
+    [RequireComponent(typeof(Button))]
+    public class PlayButton : MonoBehaviour
     {
-        _button.onClick.AddListener(OnButtonClick);
-    }
+        [SerializeField] private CinemachineSwitcher _switcher;
+        [SerializeField] private FreeUnitButton _freeUnit;
+        [SerializeField] private BuyUnitButton _buyUnit;
 
-    private void OnDisable()
-    {
-        _button.onClick.RemoveListener(OnButtonClick);
-    }
+        private Button _button;
 
-    private void Awake()
-    {
-        _button = GetComponent<Button>();
-    }
+        public bool IsGameStarted { get; private set; } = false;
 
-    private void OnButtonClick()
-    {
-        _button.gameObject.SetActive(false);
-        _freeUnit.gameObject.SetActive(false);
-        _buyUnit.gameObject.SetActive(false);
-        _switcher.SwitchPriority();
+        public event Action GameStarted;
 
-        IsGameStarted = true;
+        private void OnEnable()
+        {
+            AddListener();
+        }
 
-        GameStarted?.Invoke();
+        private void OnDisable()
+        {
+            RemoveListener();
+        }
+
+        private void Awake()
+        {
+            GetComponent();
+        }
+
+        private void AddListener()
+        {
+            _button.onClick.AddListener(OnButtonClick);
+        }
+
+        private void RemoveListener()
+        {
+            _button.onClick.RemoveListener(OnButtonClick);
+        }
+
+        private void GetComponent()
+        {
+            _button = GetComponent<Button>();
+        }
+
+        private void OnButtonClick()
+        {
+            _button.gameObject.SetActive(false);
+            _freeUnit.gameObject.SetActive(false);
+            _buyUnit.gameObject.SetActive(false);
+            _switcher.SwitchPriority();
+
+            IsGameStarted = true;
+
+            GameStarted?.Invoke();
+        }
     }
 }

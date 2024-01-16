@@ -1,23 +1,37 @@
 using UnityEngine;
 using TMPro;
+using GangWar.Player;
 
-public class MoneyBalance : MonoBehaviour
+namespace GangWar.UI.Money
 {
-    [SerializeField] private TMP_Text _money;
-    [SerializeField] private PlayerWallet _playerWallet;
-
-    private void OnEnable()
+    public class MoneyBalance : MonoBehaviour
     {
-        _playerWallet.MoneyChanged += OnMoneyChanged;
-    }
+        [SerializeField] private TMP_Text _money;
+        [SerializeField] private PlayerWallet _playerWallet;
 
-    private void OnDisable()
-    {
-        _playerWallet.MoneyChanged -= OnMoneyChanged;
-    }
+        private void OnEnable()
+        {
+            Subcribe();
+        }
 
-    private void OnMoneyChanged(int money)
-    {
-        _money.text = money.ToString();
+        private void OnDisable()
+        {
+            UnSubcribe();
+        }
+
+        private void Subcribe()
+        {
+            _playerWallet.MoneyChanged += OnMoneyChanged;
+        }
+
+        private void UnSubcribe()
+        {
+            _playerWallet.MoneyChanged -= OnMoneyChanged;
+        }
+
+        private void OnMoneyChanged(int money)
+        {
+            _money.text = money.ToString();
+        }
     }
 }

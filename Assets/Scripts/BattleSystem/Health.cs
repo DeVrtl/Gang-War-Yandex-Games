@@ -1,26 +1,29 @@
 using UnityEngine;
-using UnityEngine.Events;
+using System;
 
-public abstract class Health : MonoBehaviour
+namespace GangWar.BattleSystem
 {
-    [field: SerializeField] public int HealthAmount;
-
-    public event UnityAction<int> HealthChanged;
-
-    protected virtual void CheackStatus()
+    public abstract class Health : MonoBehaviour
     {
-        if (HealthAmount <= 0)
+        [field: SerializeField] public int HealthAmount;
+
+        public event Action<int> HealthChanged;
+
+        protected virtual void CheackStatus()
         {
-            gameObject.SetActive(false);
+            if (HealthAmount <= 0)
+            {
+                gameObject.SetActive(false);
+            }
         }
-    }
 
-    public virtual void TakeDamage(int amount)
-    {
-        HealthAmount -= amount;
+        public virtual void TakeDamage(int amount)
+        {
+            HealthAmount -= amount;
 
-        HealthChanged?.Invoke(HealthAmount);
+            HealthChanged?.Invoke(HealthAmount);
 
-        CheackStatus();
+            CheackStatus();
+        }
     }
 }

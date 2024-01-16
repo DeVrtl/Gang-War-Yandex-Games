@@ -1,33 +1,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeaderboardView : MonoBehaviour
+namespace GangWar.LeaderBoard
 {
-    [SerializeField] private Transform _container;
-    [SerializeField] private LeaderboardElement _leaderBoardElementPrefab;
-
-    private List<LeaderboardElement> _spawnedElements = new List<LeaderboardElement>();
-
-    public void ConstructLeaderboard(List<LeaderboardPlayer> leaderboardPlayers)
+    public class LeaderboardView : MonoBehaviour
     {
-        ClearLeaderboard();
+        [SerializeField] private Transform _container;
+        [SerializeField] private LeaderboardElement _leaderBoardElementPrefab;
 
-        foreach (LeaderboardPlayer player in leaderboardPlayers)
+        private List<LeaderboardElement> _spawnedElements = new List<LeaderboardElement>();
+
+        public void ConstructLeaderboard(List<LeaderboardPlayer> leaderboardPlayers)
         {
-            LeaderboardElement leaderBoardElementInstance = Instantiate(_leaderBoardElementPrefab, _container);
-            leaderBoardElementInstance.Initialized(player.Name, player.Score, player.Rank);
+            ClearLeaderboard();
 
-            _spawnedElements.Add(leaderBoardElementInstance);
+            foreach (LeaderboardPlayer player in leaderboardPlayers)
+            {
+                LeaderboardElement leaderBoardElementInstance = Instantiate(_leaderBoardElementPrefab, _container);
+                leaderBoardElementInstance.Initialize(player.Name, player.Score, player.Rank);
+
+                _spawnedElements.Add(leaderBoardElementInstance);
+            }
+        }
+
+        private void ClearLeaderboard()
+        {
+            foreach (var element in _spawnedElements)
+            {
+                Destroy(element);
+            }
+
+            _spawnedElements = new List<LeaderboardElement>();
         }
     }
 
-    private void ClearLeaderboard()
-    {
-        foreach (var element in _spawnedElements)
-        {
-            Destroy(element);
-        }
-
-        _spawnedElements = new List<LeaderboardElement>();
-    }
 }

@@ -1,41 +1,60 @@
-using UnityEngine;
-
-[RequireComponent(typeof(ParticleSystemFollow))]
-public class ParticleSystemHandler : MonoBehaviour
+namespace GangWar.ParticleSystem
 {
-    [field: SerializeField] public AudioSource Source;
+    using GangWar.Unit;
+    using UnityEngine;
 
-    [SerializeField] private ParticleSystem _effect;
-
-    private UnitHealth _health;
-    private ParticleSystemFollow _follow;
-
-    private void OnDisable()
+    [RequireComponent(typeof(ParticleSystemFollow))]
+    public class ParticleSystemHandler : MonoBehaviour
     {
-        _health.Died -= OnDied;
-    }
+        [field: SerializeField] public AudioSource Source;
 
-    private void Awake()
-    {
-        _follow = GetComponent<ParticleSystemFollow>();
-    }
+        [SerializeField] private ParticleSystem _effect;
 
-    private void Start()
-    {
-        _health.Died += OnDied;
-    }
+        private UnitHealth _health;
+        private ParticleSystemFollow _follow;
 
-    private void OnDied()
-    {
-        _follow.enabled = false;
+        private void OnDisable()
+        {
+            UnSubcribe();
+        }
 
-        _effect.Play();
-        Source.Play();
-    }
+        private void Awake()
+        {
+            GetComponent();
+        }
 
-    public void Initialize(UnitHealth health, Unit unit)
-    {
-        _health = health;
-        _follow.SetTarget(unit);
+        private void Start()
+        {
+            Subcribe();
+        }
+
+        private void Subcribe()
+        {
+            _health.Died += OnDied;
+        }
+
+        private void UnSubcribe()
+        {
+            _health.Died -= OnDied;
+        }
+
+        private void GetComponent()
+        {
+            _follow = GetComponent<ParticleSystemFollow>();
+        }
+
+        private void OnDied()
+        {
+            _follow.enabled = false;
+
+            _effect.Play();
+            Source.Play();
+        }
+
+        public void Initialize(UnitHealth health, Unit unit)
+        {
+            _health = health;
+            _follow.SetTarget(unit);
+        }
     }
 }

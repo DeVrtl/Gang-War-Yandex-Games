@@ -1,4 +1,7 @@
-public enum UnitAnimations
+namespace GangWar.Unit
 {
-    Idle, RunWithGun
+    public enum UnitAnimations
+    {
+        Idle, RunWithGun
+    }
 }

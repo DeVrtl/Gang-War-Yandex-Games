@@ -1,75 +1,96 @@
 using UnityEngine;
 using Agava.WebUtility;
 using UnityEngine.UI;
+using GangWar.UI.UnitPurchase;
+using GangWar.UI.UnitSelection;
+using GangWar.Level;
 
-public class Tutorial : MonoBehaviour
+namespace GangWar.UI.Tutorial
 {
-    private const int FirstLevel = 1;
-
-    [SerializeField] private PlayButton _playButton;
-    [SerializeField] private UnitSelector _selector;
-    [SerializeField] private FreeUnitButton _freeUnitButton;
-    [SerializeField] private LevelComplitionCounter _levelComplitionCounter;
-    [SerializeField] private Image _unitSelectorScreenHand;
-    [SerializeField] private Image _placeUnitPCHand;
-    [SerializeField] private Image _placeUnitMobileHand;
-    [SerializeField] private Image _buyUnitScreenHand;
-    [SerializeField] private Image _playHand;
-    [SerializeField] private Image _leftMobileHand;
-    [SerializeField] private Image _rightMobileHand;
-    [SerializeField] private GameObject _pcMovementCard;
-
-    private void OnEnable()
+    public class Tutorial : MonoBehaviour
     {
-        _freeUnitButton.FreeButtonClicked += OnFreeButtonClicked;
-        _selector.SelectorDisabled += OnSelectorDisabled;
-        _playButton.GameStarted += OnGameStarted;
-    }
+        private const int FirstLevel = 1;
 
-    private void OnDisable()
-    {
-        _freeUnitButton.FreeButtonClicked -= OnFreeButtonClicked;
-        _selector.SelectorDisabled -= OnSelectorDisabled;
-        _playButton.GameStarted -= OnGameStarted;
-    }
+        [SerializeField] private PlayButton _playButton;
+        [SerializeField] private UnitSelector _selector;
+        [SerializeField] private FreeUnitButton _freeUnitButton;
+        [SerializeField] private LevelComplitionCounter _levelComplitionCounter;
+        [SerializeField] private Image _unitSelectorScreenHand;
+        [SerializeField] private Image _placeUnitPCHand;
+        [SerializeField] private Image _placeUnitMobileHand;
+        [SerializeField] private Image _buyUnitScreenHand;
+        [SerializeField] private Image _playHand;
+        [SerializeField] private Image _leftMobileHand;
+        [SerializeField] private Image _rightMobileHand;
+        [SerializeField] private GameObject _pcMovementCard;
 
-    private void Awake()
-    {
-        if (_levelComplitionCounter.CurrentLevel == FirstLevel)
+        private void OnEnable()
         {
-            _unitSelectorScreenHand.gameObject.SetActive(true);
-            _buyUnitScreenHand.gameObject.SetActive(true);
-            _leftMobileHand.gameObject.SetActive(true);
-            _rightMobileHand.gameObject.SetActive(true);
+            Subcribe();
         }
-    }
 
-    private void OnGameStarted()
-    {
-        if (Device.IsMobile == false && _levelComplitionCounter.CurrentLevel == FirstLevel)
+        private void OnDisable()
         {
-            _pcMovementCard.gameObject.SetActive(true);
+            UnSubcribe();
         }
-    }
 
-    private void OnFreeButtonClicked()
-    {
-        if (_levelComplitionCounter.CurrentLevel == FirstLevel)
+        private void Awake()
         {
-            _buyUnitScreenHand.gameObject.SetActive(false);
-            _playHand.gameObject.SetActive(true);
+            ShowTutorial();
         }
-    }
 
-    private void OnSelectorDisabled()
-    {
-        if (Device.IsMobile == true && _levelComplitionCounter.CurrentLevel == FirstLevel)
+        private void Subcribe()
         {
-            _placeUnitMobileHand.gameObject.SetActive(true);
+            _freeUnitButton.FreeButtonClicked += OnFreeButtonClicked;
+            _selector.SelectorDisabled += OnSelectorDisabled;
+            _playButton.GameStarted += OnGameStarted;
         }
-        else if (_levelComplitionCounter.CurrentLevel == FirstLevel)
+
+        private void UnSubcribe()
         {
-            _placeUnitPCHand.gameObject.SetActive(true);
+            _freeUnitButton.FreeButtonClicked -= OnFreeButtonClicked;
+            _selector.SelectorDisabled -= OnSelectorDisabled;
+            _playButton.GameStarted -= OnGameStarted;
+        }
+
+        private void ShowTutorial()
+        {
+            if (_levelComplitionCounter.CurrentLevel == FirstLevel)
+            {
+                _unitSelectorScreenHand.gameObject.SetActive(true);
+                _buyUnitScreenHand.gameObject.SetActive(true);
+                _leftMobileHand.gameObject.SetActive(true);
+                _rightMobileHand.gameObject.SetActive(true);
+            }
+        }
+
+        private void OnGameStarted()
+        {
+            if (Device.IsMobile == false && _levelComplitionCounter.CurrentLevel == FirstLevel)
+            {
+                _pcMovementCard.gameObject.SetActive(true);
+            }
+        }
+
+        private void OnFreeButtonClicked()
+        {
+            if (_levelComplitionCounter.CurrentLevel == FirstLevel)
+            {
+                _buyUnitScreenHand.gameObject.SetActive(false);
+                _playHand.gameObject.SetActive(true);
+            }
+        }
+
+        private void OnSelectorDisabled()
+        {
+            if (Device.IsMobile == true && _levelComplitionCounter.CurrentLevel == FirstLevel)
+            {
+                _placeUnitMobileHand.gameObject.SetActive(true);
+            }
+            else if (_levelComplitionCounter.CurrentLevel == FirstLevel)
+            {
+                _placeUnitPCHand.gameObject.SetActive(true);
+            }
         }
     }
 }

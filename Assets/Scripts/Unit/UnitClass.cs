@@ -1,4 +1,7 @@
-public enum UnitClass
+namespace GangWar.Unit
 {
-    SMG, Shotgun, GranadeLauncher
+    public enum UnitClass
+    {
+        SMG, Shotgun, GranadeLauncher
+    }
 }

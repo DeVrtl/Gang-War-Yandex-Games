@@ -2,30 +2,43 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
-public class RestartLevelButton : MonoBehaviour
+namespace GangWar.UI
 {
-    private const string GameScene = "Game";
-
-    private Button _button;
-
-    private void OnEnable()
+    [RequireComponent(typeof(Button))]
+    public class RestartLevelButton : MonoBehaviour
     {
-        _button.onClick.AddListener(OnButtonClick);
-    }
+        private const string GameScene = "Game";
 
-    private void OnDisable()
-    {
-        _button.onClick.AddListener(OnButtonClick);
-    }
+        private Button _button;
 
-    private void Awake()
-    {
-        _button = GetComponent<Button>();
-    }
+        private void OnEnable()
+        {
+            AddListener();
+        }
 
-    private void OnButtonClick()
-    {
-        SceneManager.LoadScene(GameScene);
+        private void OnDisable()
+        {
+            RemoveListener();
+        }
+
+        private void AddListener()
+        {
+            _button.onClick.AddListener(OnButtonClick);
+        }
+
+        private void RemoveListener()
+        {
+            _button.onClick.RemoveListener(OnButtonClick);
+        }
+
+        private void Awake()
+        {
+            _button = GetComponent<Button>();
+        }
+
+        private void OnButtonClick()
+        {
+            SceneManager.LoadScene(GameScene);
+        }
     }
 }

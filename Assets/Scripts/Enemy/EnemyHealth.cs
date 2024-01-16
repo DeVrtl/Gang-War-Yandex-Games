@@ -1,23 +1,28 @@
-using UnityEngine;
+using GangWar.BattleSystem;
 
-public class EnemyHealth : Health
+namespace GangWar.Enemy
 {
-    [SerializeField] private AudioSource Source;
-    [SerializeField] private ParticleSystem DeathEffect;
-    [SerializeField] private Money _money;
+    using UnityEngine;
 
-    private void OnDisable()
+    public class EnemyHealth : Health
     {
-        DeathEffect.Play();
-        Source.Play();
-    }
+        [SerializeField] private AudioSource _source;
+        [SerializeField] private ParticleSystem _deathEffect;
+        [SerializeField] private Money _money;
 
-    protected override void CheackStatus()
-    {
-        if (HealthAmount <= 0)
+        private void OnDisable()
         {
-            gameObject.SetActive(false);
-            _money.gameObject.SetActive(true);
+            _deathEffect.Play();
+            _source.Play();
+        }
+
+        protected override void CheackStatus()
+        {
+            if (HealthAmount <= 0)
+            {
+                gameObject.SetActive(false);
+                _money.gameObject.SetActive(true);
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
 using UnityEngine;
 
-public class Border : MonoBehaviour
+namespace GangWar
 {
-
+    public class Border : MonoBehaviour
+    {
+    }
 }

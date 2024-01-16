@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TutorialHider : MonoBehaviour, IPointerDownHandler
+namespace GangWar.UI.Tutorial
 {
-    public void OnPointerDown(PointerEventData eventData)
+    public class TutorialHider : MonoBehaviour, IPointerDownHandler
     {
-        gameObject.SetActive(false);
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

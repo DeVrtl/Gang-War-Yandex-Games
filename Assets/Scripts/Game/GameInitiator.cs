@@ -2,102 +2,97 @@ using System.Collections.Generic;
 using UnityEngine;
 using Agava.YandexGames;
 using Agava.WebUtility;
+using GangWar.GangLeader;
+using GangWar.UI.Settings.SFX;
+using GangWar.UI;
+using GangWar.Unit;
+using GangWar.BattleSystem.Shooters;
+using System;
 
-public class GameInitiator : MonoBehaviour
+namespace GangWar.Game
 {
-    private const float MaxTime = 1f;
-    private const int FirstLevel = 1;
-
-    [field: SerializeField] public ToggleSound SoundButton;
-
-    [SerializeField] private InterAd _interAd;
-    [SerializeField] private RewardAd _moneyRewardAd;
-    [SerializeField] private GameObject _pauseButton;
-    [SerializeField] private LevelComplitionCounter _levelComplitionCounter;
-    [SerializeField] private MoneyAdReward _moneyAdReward;
-    [SerializeField] private PlayButton _playButton;
-    [SerializeField] private LeaderboardButton _leaderboard;
-    [SerializeField] private GameObject _mobileInputCard;
-    [SerializeField] private GangLeaderMoveForward _bossMouseMover;
-    [SerializeField] private GangLeaderKeyboardStrafe _keyboardStrafe;
-    [SerializeField] private GangLeaderMobileMovement _bossMobileMovement;
-    [SerializeField] private List<CellHover> _cellHovers = new List<CellHover>();
-
-    public List<Shooter> EnemyShoters { get; private set; } = new List<Shooter>();
-    public List<UnitAnimator> UnitAnimators { get; private set; } = new List<UnitAnimator>();
-    public List<UnitMove> UnitMoveForwards { get; private set; } = new List<UnitMove>();
-    public List<Shooter> UnitShooters { get; private set; } = new List<Shooter>();
-
-    private void OnEnable()
+    public class GameInitiator : MonoBehaviour
     {
-        _playButton.GameStarted += OnGameStarted;
-    }
+        private const float MaxTime = 1f;
 
-    private void OnDisable()
-    {
-        _playButton.GameStarted -= OnGameStarted;
-    }
+        [field: SerializeField] public ToggleSound SoundButton;
 
-    private void Awake()
-    {
-        if (_levelComplitionCounter.CurrentLevel > FirstLevel)
+        [SerializeField] private GameObject _pauseButton;
+        [SerializeField] private PlayButton _playButton;
+        [SerializeField] private GameObject _mobileInputCard;
+        [SerializeField] private GangLeaderMoveForward _bossMouseMover;
+        [SerializeField] private GangLeaderKeyboardStrafe _keyboardStrafe;
+        [SerializeField] private GangLeaderMobileMovement _bossMobileMovement;
+
+        public List<Shooter> EnemyShoters { get; private set; } = new List<Shooter>();
+        public List<UnitMove> UnitMoveForwards { get; private set; } = new List<UnitMove>();
+        public List<Shooter> UnitShooters { get; private set; } = new List<Shooter>();
+
+        public event Action GameInitiated;
+
+        private void OnEnable()
         {
-            _interAd.ShowInterstitialAd();
-            _moneyAdReward.gameObject.SetActive(true);
+            Subcribe();
         }
 
+        private void OnDisable()
+        {
+            UnSubcribe();
+        }
+
+        private void Awake()
+        {
 #if UNITY_WEBGL && !UNITY_EDITOR
         YandexGamesSdk.GameReady();
 #endif
-    }
-
-    private void Start()
-    {
-        Time.timeScale = MaxTime;
-    }
-
-    private void OnGameStarted()
-    {
-        if (Device.IsMobile == true)
-        {
-            _mobileInputCard.SetActive(true);
-            _bossMobileMovement.enabled = true;
-        }
-        else
-        {
-            _bossMouseMover.enabled = true;
-            _keyboardStrafe.enabled = true;
         }
 
-        foreach (var cell in _cellHovers)
+        private void Start()
         {
-            cell.DisableCollider();
-            cell.Renderer.enabled = false;
+            Time.timeScale = MaxTime;
         }
 
-        foreach (var animator in UnitAnimators)
+        private void Subcribe()
         {
-            animator.Play(UnitAnimations.RunWithGun);
+            _playButton.GameStarted += OnGameStarted;
         }
 
-        foreach (var unitMove in UnitMoveForwards)
+        private void UnSubcribe()
         {
-            unitMove.enabled = true;
+            _playButton.GameStarted -= OnGameStarted;
         }
 
-        foreach (var shooter in UnitShooters)
+        private void OnGameStarted()
         {
-            shooter.enabled = true;
+            if (Device.IsMobile == true)
+            {
+                _mobileInputCard.SetActive(true);
+                _bossMobileMovement.enabled = true;
+            }
+            else
+            {
+                _bossMouseMover.enabled = true;
+                _keyboardStrafe.enabled = true;
+            }
+
+            foreach (var unitMove in UnitMoveForwards)
+            {
+                unitMove.enabled = true;
+            }
+
+            foreach (var shooter in UnitShooters)
+            {
+                shooter.enabled = true;
+            }
+
+            foreach (var enemyShooter in EnemyShoters)
+            {
+                enemyShooter.enabled = true;
+            }
+
+            _pauseButton.SetActive(true);
+
+            GameInitiated?.Invoke();
         }
-
-        foreach (var enemyShooter in EnemyShoters)
-        {
-            enemyShooter.enabled = true;
-        }
-
-        _pauseButton.SetActive(true);
-
-        _leaderboard.gameObject.SetActive(false);
-        _moneyRewardAd.gameObject.SetActive(false);
     }
 }

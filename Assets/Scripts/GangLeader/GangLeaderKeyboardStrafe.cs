@@ -1,19 +1,22 @@
 using UnityEngine;
 
-public class GangLeaderKeyboardStrafe : MonoBehaviour
+namespace GangWar.GangLeader
 {
-    [SerializeField] private GangLeaderSideMoves _sideMoves;
-
-    private void FixedUpdate()
+    public class GangLeaderKeyboardStrafe : MonoBehaviour
     {
-        if (Input.GetKey(KeyCode.A))
-        {
-            _sideMoves.MoveLeft();
-        }
+        [SerializeField] private GangLeaderSideMoves _sideMoves;
 
-        if (Input.GetKey(KeyCode.D))
+        private void FixedUpdate()
         {
-            _sideMoves.MoveRight();
+            if (Input.GetKey(KeyCode.A))
+            {
+                _sideMoves.MoveLeft();
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                _sideMoves.MoveRight();
+            }
         }
     }
 }

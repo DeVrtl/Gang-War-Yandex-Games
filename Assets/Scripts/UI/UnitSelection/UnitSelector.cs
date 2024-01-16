@@ -1,133 +1,88 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using System;
+using GangWar.Level;
+using GangWar.Unit;
 
-public class UnitSelector : MonoBehaviour
+namespace GangWar.UI.UnitSelection
 {
-    [SerializeField] private LevelComplitionCounter _levelComplitionCounter;
-    [SerializeField] private UnitUIConfigurator _configurator;
-    [SerializeField] private List<Transform> _spawnPoints;
-    [SerializeField] private GameObject _background;
-
-    private List<UnitSelectionButton> _selectionButtons = new List<UnitSelectionButton>();
-
-    public event UnityAction SelectorDisabled;
-
-    private void OnDisable()
+    public class UnitSelector : MonoBehaviour
     {
-        SelectorDisabled?.Invoke();
-    }
+        [SerializeField] private LevelComplitionCounter _levelComplitionCounter;
+        [SerializeField] private UnitCardConfigurator _configurator;
+        [SerializeField] private List<Transform> _spawnPoints;
+        [SerializeField] private GameObject _background;
+        [SerializeField] private UnitSpawner _spawner;
 
-    private void Awake()
-    {
-        foreach (var point in _spawnPoints)
+        private List<UnitSelectionCard> _selectionButtons = new List<UnitSelectionCard>();
+
+        public event Action SelectorDisabled;
+
+        private void OnDisable()
         {
-            UnitSelectionButton unitSelectionButton = Instantiate(_configurator.UitSelectionButton, point);
-            unitSelectionButton.SetBackground(_background);
-            _selectionButtons.Add(unitSelectionButton);
+            RaiseEvent();
         }
-    }
 
-    private void Start()
-    {
-
-        switch (_levelComplitionCounter.CurrentLevel)
+        private void Awake()
         {
-            case 1:
+            SpawnUnitsCard();
+        }
 
-                _configurator.ConfigurateButtonsForFirstLevelOrDefualt(_selectionButtons);
+        private void Start()
+        {
+            ConfigurateCards();
+        }
 
-                break;
+        private void RaiseEvent()
+        {
+            SelectorDisabled?.Invoke();
+        }
 
-            case 2:
+        private void SpawnUnitsCard()
+        {
+            foreach (var point in _spawnPoints)
+            {
+                UnitSelectionCard unitSelectionCard = Instantiate(_configurator.UitSelectionButton, point);
+                unitSelectionCard.SetBackground(_background);
+                unitSelectionCard.SetSpawner(_spawner);
+                _selectionButtons.Add(unitSelectionCard);
+            }
+        }
 
-                _configurator.ConfigurateButtonsForSecondLevel(_selectionButtons);
+        private void ConfigurateCards()
+        {
+            switch (_levelComplitionCounter.CurrentLevel)
+            {
+                case 1:
 
-                break;
+                    _configurator.ConfigurateCardsForFirstLevelOrDefualt(_selectionButtons);
 
-            case 3:
+                    break;
 
-                _configurator.ConfigurateButtonsForThirdLevel(_selectionButtons);
+                case 2:
 
-                break;
+                    _configurator.ConfigurateCardsForSecondLevel(_selectionButtons);
 
-            case >= 4:
+                    break;
 
-                _configurator.ConfigurateButtonsForMoreThenThirdLevel(_selectionButtons);
+                case 3:
 
-                break;
+                    _configurator.ConfigurateCardsForThirdLevel(_selectionButtons);
 
-            default:
+                    break;
 
-                _configurator.ConfigurateButtonsForFirstLevelOrDefualt(_selectionButtons);
+                case >= 4:
 
-                break;
+                    _configurator.ConfigurateCardsForMoreThenThirdLevel(_selectionButtons);
+
+                    break;
+
+                default:
+
+                    _configurator.ConfigurateCardsForFirstLevelOrDefualt(_selectionButtons);
+
+                    break;
+            }
         }
     }
 }
-//for (int unitButton = 0; unitButton < _unitSelectionButtons.Length; unitButton++)
-//{
-//    for (int icon = 0; icon < _icons.Count; icon++)
-//    {
-//        for (int description = 0; description < _descriptions.Count; description++)
-//        {
-//            _unitSelectionButtons[unitButton].GenerateUnit(_descriptions[0], _icons[0], UnitName.SMGUNIT);
-//        }
-//    }
-//}
-//2
-//for (int unitButton = 0; unitButton < _unitSelectionButtons.Length; unitButton++)
-//{
-//    for (int icon = 0; icon < _icons.Count; icon++)
-//    {
-//        for (int description = 0; description < _descriptions.Count; description++)
-//        {
-//            _unitSelectionButtons[0].GenerateUnit(_descriptions[0], _icons[0], UnitName.SMGUNIT);
-//            _unitSelectionButtons[1].GenerateUnit(_descriptions[1], _iconsNew[0], UnitName.SHOTGUNUNIT);
-//            _unitSelectionButtons[2].GenerateUnit(_descriptions[1], _iconsNew[0], UnitName.SHOTGUNUNIT);
-//        }
-//    }
-//}
-//3
-//for (int unitButton = 0; unitButton < _unitSelectionButtons.Length; unitButton++)
-//{
-//    for (int icon = 0; icon < _icons.Count; icon++)
-//    {
-//        for (int newIcon = 0; newIcon < _iconsNew.Count; newIcon++)
-//        {
-//            for (int description = 0; description < _descriptions.Count; description++)
-//            {
-//                _unitSelectionButtons[0].GenerateUnit(_descriptions[0], _icons[0], UnitName.SMGUNIT);
-//                _unitSelectionButtons[1].GenerateUnit(_descriptions[1], _icons[1], UnitName.SHOTGUNUNIT);
-//                _unitSelectionButtons[2].GenerateUnit(_descriptions[2], _iconsNew[1], UnitName.GRANADELAUNCHERUNIT);
-//            }
-//        }
-//    }
-//}
-//4>
-//for (int unitButton = 0; unitButton < _unitSelectionButtons.Length; unitButton++)
-//{
-//    for (int icon = 0; icon < _icons.Count; icon++)
-//    {
-//        for (int newIcon = 0; newIcon < _iconsNew.Count; newIcon++)
-//        {
-//            for (int description = 0; description < _descriptions.Count; description++)
-//            {
-//                _unitSelectionButtons[0].GenerateUnit(_descriptions[0], _icons[0], UnitName.SMGUNIT);
-//                _unitSelectionButtons[1].GenerateUnit(_descriptions[1], _icons[1], UnitName.SHOTGUNUNIT);
-//                _unitSelectionButtons[2].GenerateUnit(_descriptions[2], _icons[2], UnitName.GRANADELAUNCHERUNIT);
-//            }
-//        }
-//    }
-//}
-//defualt
-//for (int unitButton = 0; unitButton < _unitSelectionButtons.Length; unitButton++)
-//{
-//    for (int icon = 0; icon < _icons.Count; icon++)
-//    {
-//        for (int description = 0; description < _descriptions.Count; description++)
-//        {
-//            _unitSelectionButtons[unitButton].GenerateUnit(_descriptions[0], _icons[0], UnitName.SMGUNIT);
-//        }
-//    }
-//}

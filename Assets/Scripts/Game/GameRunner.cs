@@ -1,94 +1,92 @@
 using Agava.WebUtility;
+using GangWar.Level;
+using GangWar.UI.Pause;
+using GangWar.UI.Settings;
+using GangWar.UI;
 using UnityEngine;
+using GangWar.Cell;
 
-public class GameRunner : MonoBehaviour
+namespace GangWar.Game
 {
-    [SerializeField] private PlayButton _playButton;
-    [SerializeField] private Pause _pause;
-    [SerializeField] private SettingsCard _settingsCard;
-    [SerializeField] private CellOccupiedChecker _cellOccupiedChecker;
-    [SerializeField] private GameObject _mobileInputCard;
-    [SerializeField] private Finish _finish;
-
-    public bool IsGameRunning { get; private set; } = true;
-
-    private void OnEnable()
+    public class GameRunner : MonoBehaviour
     {
-        _pause.GamePaused += OnGamePaused;
-        _pause.GameUnPaused += OnGameUnPaused;
-        _settingsCard.SettingsCardOpened += OnSettingsCardOpened;
-        _settingsCard.SettingsCardClosed += OnSettingsCardClosed;
-        _cellOccupiedChecker.GameLost += OnGameLost;
-        _finish.LevelCompleted += OnLevelCompleted;
-    }
+        [SerializeField] private PlayButton _playButton;
+        [SerializeField] private Pause _pause;
+        [SerializeField] private GameLoser _gameLoser;
+        [SerializeField] private SettingsCard _settingsCard;
+        [SerializeField] private GameObject _mobileInputCard;
+        [SerializeField] private Finish _finish;
 
-    private void OnDisable()
-    {
-        _pause.GamePaused -= OnGamePaused;
-        _pause.GameUnPaused -= OnGameUnPaused;
-        _settingsCard.SettingsCardOpened -= OnSettingsCardOpened;
-        _settingsCard.SettingsCardClosed -= OnSettingsCardClosed;
-        _cellOccupiedChecker.GameLost -= OnGameLost;
-        _finish.LevelCompleted -= OnLevelCompleted;
-    }
+        public bool IsGameRunning { get; private set; } = true;
 
-    private void OnGamePaused()
-    {
-        IsGameRunning = false;
-
-        if (Device.IsMobile == true)
+        private void OnEnable()
         {
-            _mobileInputCard.SetActive(false);
+            _pause.GamePaused += OnGamePaused;
+            _pause.GameUnPaused += OnGameUnPaused;
+            _settingsCard.SettingsCardOpened += OnSettingsCardOpened;
+            _settingsCard.SettingsCardClosed += OnSettingsCardClosed;
+            _gameLoser.GameLost += OnGameLost;
+            _finish.LevelCompleted += OnLevelCompleted;
         }
-    }
 
-    private void OnGameUnPaused()
-    {
-        IsGameRunning = true;
-
-        if (Device.IsMobile == true)
+        private void OnDisable()
         {
-            _mobileInputCard.SetActive(true);
+            _pause.GamePaused -= OnGamePaused;
+            _pause.GameUnPaused -= OnGameUnPaused;
+            _settingsCard.SettingsCardOpened -= OnSettingsCardOpened;
+            _settingsCard.SettingsCardClosed -= OnSettingsCardClosed;
+            _gameLoser.GameLost -= OnGameLost;
+            _finish.LevelCompleted -= OnLevelCompleted;
         }
-    }
 
-    private void OnSettingsCardOpened()
-    {
-        IsGameRunning = false;
-
-        if (Device.IsMobile == true && _playButton.IsGameStarted == true)
+        private void SetGameRunningState(bool resualt)
         {
-            _mobileInputCard.SetActive(false);
+            IsGameRunning = resualt;
+
+            if (Device.IsMobile == true)
+            {
+                _mobileInputCard.SetActive(resualt);
+            }
         }
-    }
 
-    private void OnSettingsCardClosed()
-    {
-        IsGameRunning = true;
-
-        if (Device.IsMobile == true && _playButton.IsGameStarted == true)
+        private void ToggleGameRunningStateWhenSettingsCard(bool isSettingsOpen)
         {
-            _mobileInputCard.SetActive(true);
+            IsGameRunning = isSettingsOpen;
+
+            if (Device.IsMobile == true && _playButton.IsGameStarted == true)
+            {
+                _mobileInputCard.SetActive(isSettingsOpen);
+            }
         }
-    }
 
-    private void OnGameLost()
-    {
-        IsGameRunning = false;
-
-        if (Device.IsMobile == true)
+        private void OnGamePaused()
         {
-            _mobileInputCard.SetActive(false);
+            SetGameRunningState(false);
         }
-    }
 
-    private void OnLevelCompleted()
-    {
-        IsGameRunning = false;
-
-        if (Device.IsMobile == true)
+        private void OnGameUnPaused()
         {
-            _mobileInputCard.SetActive(false);
+            SetGameRunningState(true);
+        }
+
+        private void OnSettingsCardOpened()
+        {
+            ToggleGameRunningStateWhenSettingsCard(false);
+        }
+
+        private void OnSettingsCardClosed()
+        {
+            ToggleGameRunningStateWhenSettingsCard(true);
+        }
+
+        private void OnGameLost()
+        {
+            SetGameRunningState(false);
+        }
+
+        private void OnLevelCompleted()
+        {
+            SetGameRunningState(false);
         }
     }
 }

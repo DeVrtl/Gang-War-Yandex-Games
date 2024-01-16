@@ -1,29 +1,34 @@
 using UnityEngine;
 
-public class ShotgunShooter : Shooter
+namespace GangWar.BattleSystem.Shooters
 {
-    [SerializeField] private Transform[] _barrels;
-
-    private float _lastFireTime;
-
-    private void Update()
+    public class ShotgunShooter : Shooter
     {
-        if (Time.time > (1 / FireRate) + _lastFireTime)
+        private const int Divident = 1;
+
+        [SerializeField] private Transform[] _barrels;
+
+        private float _lastFireTime;
+
+        private void Update()
         {
-            foreach (var barrel in _barrels)
+            if (Time.time > (Divident / FireRate) + _lastFireTime)
             {
-                if (BulletPool.TryGetObject(out GameObject bullet))
+                foreach (var barrel in _barrels)
                 {
-                    bullet.transform.rotation = Quaternion.identity;
-                    BulletPool.SetObject(bullet, barrel.position);
-                    bullet.transform.rotation = barrel.rotation;
+                    if (BulletPool.TryGetObject(out GameObject bullet))
+                    {
+                        bullet.transform.rotation = Quaternion.identity;
+                        BulletPool.SetObject(bullet, barrel.position);
+                        bullet.transform.rotation = barrel.rotation;
+                    }
                 }
+
+                ShootEffect.Play();
+                Source.Play();
+
+                _lastFireTime = Time.time;
             }
-
-            ShootEffect.Play();
-            Source.Play();
-
-            _lastFireTime = Time.time;
         }
     }
 }

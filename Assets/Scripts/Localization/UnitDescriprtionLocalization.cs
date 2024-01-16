@@ -1,43 +1,58 @@
+using GangWar.UI.UnitSelection;
+using GangWar.Unit;
 using Lean.Localization;
 using UnityEngine;
 
-[RequireComponent(typeof(UnitSelectionButton))]
-public class UnitDescriprtionLocalization : MonoBehaviour
+namespace GangWar.Localization
 {
-    private const string SmgName = "Unit class smg";
-    private const string ShotgunName = "Unit class";
-    private const string GranadeLauncherName = "Unit class gl";
-
-    [SerializeField] private LeanLocalizedTextMeshProUGUI _leanLocalizedText;
-
-    private UnitSelectionButton _unitSelectionButton;
-
-    private void Awake()
+    [RequireComponent(typeof(UnitSelectionCard))]
+    public class UnitDescriprtionLocalization : MonoBehaviour
     {
-        _unitSelectionButton = GetComponent<UnitSelectionButton>();
-    }
+        private const string SmgName = "Unit class smg";
+        private const string ShotgunName = "Unit class";
+        private const string GranadeLauncherName = "Unit class gl";
 
-    private void Start()
-    {
-        switch (_unitSelectionButton.Unit.Class)
+        [SerializeField] private LeanLocalizedTextMeshProUGUI _leanLocalizedText;
+
+        private UnitSelectionCard _unitSelectionButton;
+
+        private void Awake()
         {
-            case UnitClass.SMG:
+            GetComponent();
+        }
 
-                _leanLocalizedText.TranslationName = SmgName;
+        private void Start()
+        {
+            LocalizeDescriprtion();
+        }
 
-                break;
+        private void GetComponent()
+        {
+            _unitSelectionButton = GetComponent<UnitSelectionCard>();
+        }
 
-            case UnitClass.Shotgun:
+        private void LocalizeDescriprtion()
+        {
+            switch (_unitSelectionButton.Unit.Class)
+            {
+                case UnitClass.SMG:
 
-                _leanLocalizedText.TranslationName = ShotgunName;
+                    _leanLocalizedText.TranslationName = SmgName;
 
-                break;
+                    break;
 
-            case UnitClass.GranadeLauncher:
+                case UnitClass.Shotgun:
 
-                _leanLocalizedText.TranslationName = GranadeLauncherName;
+                    _leanLocalizedText.TranslationName = ShotgunName;
 
-                break;
+                    break;
+
+                case UnitClass.GranadeLauncher:
+
+                    _leanLocalizedText.TranslationName = GranadeLauncherName;
+
+                    break;
+            }
         }
     }
 }

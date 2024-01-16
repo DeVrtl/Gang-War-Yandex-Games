@@ -1,48 +1,71 @@
 using UnityEngine;
-using UnityEngine.Events;
+using System;
 
-public class LevelComplitionCounter : MonoBehaviour
+namespace GangWar.Level
 {
-    private const int ViewRedundantValue = 1;
-    private const string CurrentLevelNumber = "CurrentLevelNumber";
-    
-    [SerializeField] private Finish _finish;
-
-    private int _currentLevelView;
-
-    public int CurrentLevel { get; private set; } = 1;
-
-    public event UnityAction<int> LevelChanged;
-
-    private void OnEnable()
+    public class LevelComplitionCounter : MonoBehaviour
     {
-        _finish.LevelCompleted += OnLevelCompleted;
-    }
+        private const int ViewRedundantValue = 1;
+        private const string CurrentLevelNumber = "CurrentLevelNumber";
 
-    private void OnDisable()
-    {
-        _finish.LevelCompleted -= OnLevelCompleted;
-    }
+        [SerializeField] private Finish _finish;
 
-    private void Awake()
-    {
-        if (PlayerPrefs.HasKey(CurrentLevelNumber))
+        private int _currentLevelView;
+
+        public int CurrentLevel { get; private set; } = 1;
+
+        public event Action<int> LevelChanged;
+
+        private void OnEnable()
         {
-            CurrentLevel = PlayerPrefs.GetInt(CurrentLevelNumber);
-            _currentLevelView = CurrentLevel - ViewRedundantValue;
+            Subcribe();
         }
-    }
 
-    private void Start()
-    {
-        LevelChanged?.Invoke(_currentLevelView);
-    }
+        private void OnDisable()
+        {
+            UnSubcribe();
+        }
 
-    private void OnLevelCompleted()
-    {
-        CurrentLevel++;
+        private void Awake()
+        {
+            TryGetCurrentLevel();
+        }
 
-        PlayerPrefs.SetInt(CurrentLevelNumber, CurrentLevel);
-        PlayerPrefs.Save();
+        private void Start()
+        {
+            RaiseEvent();
+        }
+
+        private void Subcribe()
+        {
+            _finish.LevelCompleted += OnLevelCompleted;
+        }
+
+        private void UnSubcribe()
+        {
+            _finish.LevelCompleted -= OnLevelCompleted;
+        }
+
+        private void TryGetCurrentLevel()
+        {
+            if (PlayerPrefs.HasKey(CurrentLevelNumber))
+            {
+                CurrentLevel = PlayerPrefs.GetInt(CurrentLevelNumber);
+                _currentLevelView = CurrentLevel - ViewRedundantValue;
+            }
+        }
+
+        private void RaiseEvent()
+        {
+            LevelChanged?.Invoke(_currentLevelView);
+        }
+
+        private void OnLevelCompleted()
+        {
+            CurrentLevel++;
+
+            PlayerPrefs.SetInt(CurrentLevelNumber, CurrentLevel);
+            PlayerPrefs.Save();
+        }
     }
 }

@@ -1,47 +1,52 @@
 using UnityEngine;
 
-[RequireComponent(typeof(MeshRenderer), typeof(BoxCollider))]
-public class CellHover : MonoBehaviour
+namespace GangWar.Cell
 {
-    [SerializeField] private Material _standart;
-    [SerializeField] private Material _bright;
+    using GangWar.Unit;
 
-    private BoxCollider _boxCollider;
-    
-    public MeshRenderer Renderer { get; private set; }
-    public Unit UnitInCell { get; private set; }
-
-    private void Awake()
+    [RequireComponent(typeof(MeshRenderer), typeof(BoxCollider))]
+    public class CellHover : MonoBehaviour
     {
-        Renderer = GetComponent<MeshRenderer>();
-        _boxCollider = GetComponent<BoxCollider>();
-    }
+        [SerializeField] private Material _standart;
+        [SerializeField] private Material _bright;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent(out Unit unit))
+        private BoxCollider _boxCollider;
+
+        public MeshRenderer Renderer { get; private set; }
+        public UnitFollowMouse UnitInCell { get; private set; }
+
+        private void Awake()
         {
-            Renderer.material = _bright;
-            UnitInCell = unit;
+            Renderer = GetComponent<MeshRenderer>();
+            _boxCollider = GetComponent<BoxCollider>();
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.TryGetComponent(out UnitFollowMouse unit))
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent(out UnitFollowMouse unit))
+            {
+                Renderer.material = _bright;
+                UnitInCell = unit;
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.TryGetComponent(out UnitFollowMouse unit))
+            {
+                Renderer.material = _standart;
+                UnitInCell = null;
+            }
+        }
+
+        public void SwitchToStandartMaterial()
         {
             Renderer.material = _standart;
-            UnitInCell = null;
         }
-    }
 
-    public void SwitchToStandartMaterial()
-    {
-        Renderer.material = _standart;
-    }
-
-    public void DisableCollider()
-    {
-        _boxCollider.enabled = false;
+        public void DisableCollider()
+        {
+            _boxCollider.enabled = false;
+        }
     }
 }

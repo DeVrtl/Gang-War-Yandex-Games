@@ -2,36 +2,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Cell))]
-public class CellTutorial : MonoBehaviour
+namespace GangWar.Cell
 {
-    private const int FirstLevel = 1;
-
-    [SerializeField] private LevelComplitionCounter _levelComplitionCounter;
-    [SerializeField] private List<Image> _tutorialHands = new List<Image>();
-
-    private Cell _cell;
-
-    private void OnEnable()
+    [RequireComponent(typeof(Cell))]
+    public class CellTutorial : MonoBehaviour
     {
-        _cell.CellOccupied += OnCellOccupied;
-    }
+        [SerializeField] private List<Image> _tutorialHands = new List<Image>();
 
-    private void OnDisable()
-    {
-        _cell.CellOccupied -= OnCellOccupied;
-    }
+        private Cell _cell;
 
-    private void Awake()
-    {
-        _cell = GetComponent<Cell>();
-    }
-
-    private void OnCellOccupied()
-    {
-        foreach (var hand in _tutorialHands)
+        private void OnEnable()
         {
-            hand.gameObject.SetActive(false);
+            _cell.UnitPlaced += OnUnitPlaced;
+        }
+
+        private void OnDisable()
+        {
+            _cell.UnitPlaced -= OnUnitPlaced;
+        }
+
+        private void Awake()
+        {
+            _cell = GetComponent<Cell>();
+        }
+
+        private void OnUnitPlaced()
+        {
+            foreach (var hand in _tutorialHands)
+            {
+                hand.gameObject.SetActive(false);
+            }
         }
     }
 }

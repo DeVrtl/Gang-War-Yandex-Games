@@ -1,67 +1,91 @@
 using UnityEngine;
-using UnityEngine.Events;
+using System;
+using GangWar.Level;
 
-public class PlayerWallet : MonoBehaviour
+namespace GangWar.Player
 {
-    private const string MoneyAmount = "MoneyAmount";
-
-    [SerializeField] private Finish _finish;
-
-    public int Amount { get; private set; } = 0;
-
-    public event UnityAction<int> MoneyChanged;
-
-    private void OnTriggerEnter(Collider other)
+    public class PlayerWallet : MonoBehaviour
     {
-        if (other.TryGetComponent(out Money money))
+        private const string MoneyAmount = "MoneyAmount";
+
+        [SerializeField] private Finish _finish;
+
+        public int Amount { get; private set; } = 0;
+
+        public event Action<int> MoneyChanged;
+
+        private void OnTriggerEnter(Collider other)
         {
-            money.AddTo(this);
+            if (other.TryGetComponent(out Money money))
+            {
+                money.AddTo(this);
+            }
         }
-    }
 
-    private void OnEnable()
-    {
-        _finish.LevelCompleted += OnLevelCompleted;
-    }
-
-    private void OnDisable()
-    {
-        _finish.LevelCompleted -= OnLevelCompleted;
-    }
-
-    private void Awake()
-    {
-        if (PlayerPrefs.HasKey(MoneyAmount))
+        private void OnEnable()
         {
-            Amount = PlayerPrefs.GetInt(MoneyAmount);
+            Subcribe();
         }
-    }
 
-    private void Start()
-    {
-        MoneyChanged?.Invoke(Amount);
-    }
+        private void OnDisable()
+        {
+            UnSubcribe();
+        }
 
-    private void OnLevelCompleted()
-    {
-        SaveMoney();
-    }
+        private void Awake()
+        {
+            TryGetMoneyAmount();
+        }
 
-    public void SaveMoney()
-    {
-        PlayerPrefs.SetInt(MoneyAmount, Amount);
-        PlayerPrefs.Save();
-    }
+        private void Start()
+        {
+            RaiseEvent();
+        }
 
-    public void AddMoney(int money)
-    {
-        Amount += money;
-        MoneyChanged?.Invoke(Amount);
-    }
+        private void Subcribe()
+        {
+            _finish.LevelCompleted += OnLevelCompleted;
+        }
 
-    public void TakeMoney(int cost)
-    {
-        Amount -= cost;
-        MoneyChanged?.Invoke(Amount);
+        private void UnSubcribe()
+        {
+            _finish.LevelCompleted -= OnLevelCompleted;
+        }
+
+        private void TryGetMoneyAmount()
+        {
+            if (PlayerPrefs.HasKey(MoneyAmount))
+            {
+                Amount = PlayerPrefs.GetInt(MoneyAmount);
+            }
+        }
+
+        private void RaiseEvent()
+        {
+            MoneyChanged?.Invoke(Amount);
+        }
+
+        private void OnLevelCompleted()
+        {
+            SaveMoney();
+        }
+
+        public void SaveMoney()
+        {
+            PlayerPrefs.SetInt(MoneyAmount, Amount);
+            PlayerPrefs.Save();
+        }
+
+        public void AddMoney(int money)
+        {
+            Amount += money;
+            MoneyChanged?.Invoke(Amount);
+        }
+
+        public void TakeMoney(int cost)
+        {
+            Amount -= cost;
+            MoneyChanged?.Invoke(Amount);
+        }
     }
 }

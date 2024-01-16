@@ -1,23 +1,37 @@
+using GangWar.Level;
 using TMPro;
 using UnityEngine;
 
-public class LevelCounterView : MonoBehaviour
+namespace GangWar.UI
 {
-    [SerializeField] private TMP_Text _levelNumber;
-    [SerializeField] private LevelComplitionCounter _levelComplitionCounter;
-
-    private void OnEnable()
+    public class LevelCounterView : MonoBehaviour
     {
-        _levelComplitionCounter.LevelChanged += OnLevelChanged;
-    }
+        [SerializeField] private TMP_Text _levelNumber;
+        [SerializeField] private LevelComplitionCounter _levelComplitionCounter;
 
-    private void OnDisable()
-    {
-        _levelComplitionCounter.LevelChanged -= OnLevelChanged;
-    }
+        private void OnEnable()
+        {
+            Subcribe();
+        }
 
-    private void OnLevelChanged(int levelNumber)
-    {
-        _levelNumber.text = levelNumber.ToString();
+        private void OnDisable()
+        {
+            UnSubcribe();
+        }
+
+        private void Subcribe()
+        {
+            _levelComplitionCounter.LevelChanged += OnLevelChanged;
+        }
+
+        private void UnSubcribe()
+        {
+            _levelComplitionCounter.LevelChanged -= OnLevelChanged;
+        }
+
+        private void OnLevelChanged(int levelNumber)
+        {
+            _levelNumber.text = levelNumber.ToString();
+        }
     }
 }

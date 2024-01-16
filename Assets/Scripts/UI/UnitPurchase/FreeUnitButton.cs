@@ -1,71 +1,99 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
+using System;
+using GangWar.Ad;
+using GangWar.Level;
 
-[RequireComponent(typeof(Button))]
-public class FreeUnitButton : MonoBehaviour
+namespace GangWar.UI.UnitPurchase
 {
-    private const int FirstLevel = 1;
+    using GangWar.Unit;
 
-    [SerializeField] private Unit _smgUnit;
-    [SerializeField] private Image _adIcon;
-    [SerializeField] private RewardAd _rewardAd;
-    [SerializeField] private GameObject _miscCard;
-    [SerializeField] private BuyUnitButton _buyUnit;
-    [SerializeField] private PlayButton _playButton;
-    [SerializeField] private LevelComplitionCounter _levelComplitionCounter;
-
-    private Button _button;
-
-    public event UnityAction FreeButtonClicked;
-
-    private void OnEnable()
+    [RequireComponent(typeof(Button))]
+    public class FreeUnitButton : MonoBehaviour
     {
-        _button.onClick.AddListener(OnButtonClick);
-    }
+        private const int FirstLevel = 1;
 
-    private void OnDisable()
-    {
-        _button.onClick.RemoveListener(OnButtonClick);
-    }
+        [SerializeField] private Unit _smgUnit;
+        [SerializeField] private Image _adIcon;
+        [SerializeField] private RewardAd _rewardAd;
+        [SerializeField] private GameObject _miscCard;
+        [SerializeField] private BuyUnitButton _buyUnit;
+        [SerializeField] private PlayButton _playButton;
+        [SerializeField] private LevelComplitionCounter _levelComplitionCounter;
+        [SerializeField] private UnitSpawner _spawner;
 
-    private void Awake()
-    {
-        _button = GetComponent<Button>();
+        private Button _button;
 
-        if (_levelComplitionCounter.CurrentLevel > FirstLevel)
+        public event Action FreeButtonClicked;
+
+        private void OnEnable()
         {
-            _adIcon.gameObject.SetActive(true);
+            AddListener();
         }
-    }
 
-    private void OnButtonClick()
-    {
-        if (_levelComplitionCounter.CurrentLevel > FirstLevel)
+        private void OnDisable()
         {
-            _rewardAd.ShowVideoAd();
-            OnVideoAdPlayed();
+            RemoveListener();
         }
-        else
+
+        private void Awake()
+        {
+            GetComponent();
+
+            ShowAd();
+        }
+
+        private void AddListener()
+        {
+            _button.onClick.AddListener(OnButtonClick);
+        }
+
+        private void RemoveListener()
+        {
+            _button.onClick.RemoveListener(OnButtonClick);
+        }
+
+        private void GetComponent()
+        {
+            _button = GetComponent<Button>();
+        }
+
+        private void ShowAd()
+        {
+            if (_levelComplitionCounter.CurrentLevel > FirstLevel)
+            {
+                _adIcon.gameObject.SetActive(true);
+            }
+        }
+
+        private void OnButtonClick()
+        {
+            if (_levelComplitionCounter.CurrentLevel > FirstLevel)
+            {
+                _rewardAd.ShowVideoAd();
+                OnVideoAdPlayed();
+            }
+            else
+            {
+                SpawnUnit();
+            }
+
+            _miscCard.SetActive(false);
+            _button.gameObject.SetActive(false);
+            _buyUnit.gameObject.SetActive(false);
+            _playButton.gameObject.SetActive(false);
+
+            FreeButtonClicked?.Invoke();
+        }
+
+        private void OnVideoAdPlayed()
         {
             SpawnUnit();
         }
 
-        _miscCard.SetActive(false);
-        _button.gameObject.SetActive(false);
-        _buyUnit.gameObject.SetActive(false);
-        _playButton.gameObject.SetActive(false);
-
-        FreeButtonClicked?.Invoke();
-    }
-
-    private void OnVideoAdPlayed()
-    {
-        SpawnUnit();
-    }
-
-    private void SpawnUnit()
-    {
-        Instantiate(_smgUnit);
+        private void SpawnUnit()
+        {
+            _spawner.Spawn(_smgUnit);
+        }
     }
 }

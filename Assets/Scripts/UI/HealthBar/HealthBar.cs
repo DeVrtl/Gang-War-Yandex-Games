@@ -1,30 +1,49 @@
+using GangWar.BattleSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+namespace GangWar.UI.HealthBar
 {
-    [SerializeField] private Health _health;
-    [SerializeField] private Slider _slider;
-    [SerializeField] private float _speed;
-
-    private void OnEnable()
+    public class HealthBar : MonoBehaviour
     {
-        _health.HealthChanged += OnHealthChanged;
-    }
+        [SerializeField] private Health _health;
+        [SerializeField] private Slider _slider;
+        [SerializeField] private float _speed;
 
-    private void OnDisable()
-    {
-        _health.HealthChanged -= OnHealthChanged;
-    }
+        private void OnEnable()
+        {
+            Subcribe();
+        }
 
-    private void Start()
-    {
-        _slider.maxValue = _health.HealthAmount;
-        _slider.value = _health.HealthAmount;
-    }
+        private void OnDisable()
+        {
+            UnSubcribe();
+        }
 
-    private void OnHealthChanged(int health)
-    {
-        _slider.value = Mathf.MoveTowards(_slider.value, health, _speed * Time.deltaTime);
+        private void Start()
+        {
+            AssignSliderValue();
+        }
+
+        private void Subcribe()
+        {
+            _health.HealthChanged += OnHealthChanged;
+        }
+
+        private void UnSubcribe()
+        {
+            _health.HealthChanged -= OnHealthChanged;
+        }
+
+        private void AssignSliderValue()
+        {
+            _slider.maxValue = _health.HealthAmount;
+            _slider.value = _health.HealthAmount;
+        }
+
+        private void OnHealthChanged(int health)
+        {
+            _slider.value = Mathf.MoveTowards(_slider.value, health, _speed * Time.deltaTime);
+        }
     }
 }

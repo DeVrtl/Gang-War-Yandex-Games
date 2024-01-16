@@ -1,18 +1,28 @@
 using UnityEngine;
 
-public class ParticleSystemFollow : MonoBehaviour
+namespace GangWar.ParticleSystem
 {
-    [SerializeField] private Vector3 _offset;
+    using GangWar.Unit;
 
-    private Unit _target;
-
-    public void SetTarget(Unit target)
+    public class ParticleSystemFollow : MonoBehaviour
     {
-        _target = target;
-    }
+        [SerializeField] private Vector3 _offset;
 
-    private void Update()
-    {
-        transform.position = _target.transform.position + _offset;
+        private Unit _target;
+
+        private void Update()
+        {
+            Follow();
+        }
+
+        private void Follow()
+        {
+            transform.position = _target.transform.position + _offset;
+        }
+
+        public void SetTarget(Unit target)
+        {
+            _target = target;
+        }
     }
 }

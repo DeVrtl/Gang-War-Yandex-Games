@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class UnitAnimator : MonoBehaviour
+namespace GangWar.Unit
 {
-    [SerializeField] private Animator _animator;
-
-    public void Play(UnitAnimations state)
+    public class UnitAnimator : MonoBehaviour
     {
-        _animator.Play(state.ToString());
+        [SerializeField] private Animator _animator;
+
+        public void Play(UnitAnimations state)
+        {
+            _animator.Play(state.ToString());
+        }
     }
 }

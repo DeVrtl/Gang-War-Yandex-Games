@@ -2,40 +2,43 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ObjectPool : MonoBehaviour
+namespace GangWar
 {
-    [SerializeField] private GameObject _gameObjectToInit;
-    [SerializeField] private GameObject _container;
-    [SerializeField] private int _capacity;
-
-    private List<GameObject> _pool = new List<GameObject>();
-
-    private void Start()
+    public class ObjectPool : MonoBehaviour
     {
-        Init(_gameObjectToInit);
-    }
+        [SerializeField] private GameObject _gameObjectToSpawn;
+        [SerializeField] private GameObject _container;
+        [SerializeField] private int _capacity;
 
-    public bool TryGetObject(out GameObject resualt)
-    {
-        resualt = _pool.FirstOrDefault(p => p.activeSelf == false);
+        private List<GameObject> _pool = new List<GameObject>();
 
-        return resualt != null;
-    }
-
-    public void SetObject(GameObject gameObject, Vector3 spawnPoint)
-    {
-        gameObject.SetActive(true);
-        gameObject.transform.position = spawnPoint;
-    }
-
-    private void Init(GameObject prefab)
-    {
-        for (int i = 0; i < _capacity; i++)
+        private void Start()
         {
-            GameObject spawned = Instantiate(prefab, _container.transform);
-            spawned.SetActive(false);
+            SpawnObject(_gameObjectToSpawn);
+        }
 
-            _pool.Add(spawned);
+        public bool TryGetObject(out GameObject resualt)
+        {
+            resualt = _pool.FirstOrDefault(p => p.activeSelf == false);
+
+            return resualt != null;
+        }
+
+        public void SetObject(GameObject gameObject, Vector3 spawnPoint)
+        {
+            gameObject.SetActive(true);
+            gameObject.transform.position = spawnPoint;
+        }
+
+        private void SpawnObject(GameObject objectToSpawn)
+        {
+            for (int i = 0; i < _capacity; i++)
+            {
+                GameObject spawned = Instantiate(objectToSpawn, _container.transform);
+                spawned.SetActive(false);
+
+                _pool.Add(spawned);
+            }
         }
     }
 }

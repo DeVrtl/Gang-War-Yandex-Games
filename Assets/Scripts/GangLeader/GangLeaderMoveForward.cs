@@ -1,20 +1,10 @@
-using UnityEngine;
-
-[RequireComponent(typeof(Rigidbody))]
-public class GangLeaderMoveForward : MonoBehaviour
+namespace GangWar.GangLeader
 {
-    [SerializeField] private float _speed;
-
-    private Rigidbody _rigidbody;
-
-    private void Start()
+    public class GangLeaderMoveForward : GangLeaderMovement
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _rigidbody.freezeRotation = true;
-    }
-
-    private void FixedUpdate()
-    {
-        _rigidbody.MovePosition(_rigidbody.position + transform.forward * _speed * Time.fixedDeltaTime);
+        private void FixedUpdate()
+        {
+            Move(transform.forward);
+        }
     }
 }

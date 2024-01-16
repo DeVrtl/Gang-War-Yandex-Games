@@ -1,21 +1,26 @@
 using UnityEngine;
 
-public class BasicShooter : Shooter
+namespace GangWar.BattleSystem.Shooters
 {
-    private float _lastFireTime;
-
-    private void Update()
+    public class BasicShooter : Shooter
     {
-        if (Time.time > (1 / FireRate) + _lastFireTime)
+        private const int Divident = 1;
+
+        private float _lastFireTime;
+
+        private void Update()
         {
-            if (BulletPool.TryGetObject(out GameObject bullet))
+            if (Time.time > (Divident / FireRate) + _lastFireTime)
             {
-                BulletPool.SetObject(bullet, Barrel.position);
+                if (BulletPool.TryGetObject(out GameObject bullet))
+                {
+                    BulletPool.SetObject(bullet, Barrel.position);
 
-                ShootEffect.Play();
-                Source.Play();
+                    ShootEffect.Play();
+                    Source.Play();
 
-                _lastFireTime = Time.time;
+                    _lastFireTime = Time.time;
+                }
             }
         }
     }

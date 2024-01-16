@@ -1,24 +1,15 @@
-using UnityEngine;
-
-[RequireComponent(typeof(Rigidbody))]
-public class GangLeaderSideMoves : MonoBehaviour
+namespace GangWar.GangLeader
 {
-    [SerializeField] private float _offsetSpeed;
-
-    private Rigidbody _rigidbody;
-
-    private void Awake()
+    public class GangLeaderSideMoves : GangLeaderMovement
     {
-        _rigidbody = GetComponent<Rigidbody>();
-    }
+        public void MoveLeft()
+        {
+            Move(-transform.right);
+        }
 
-    public void MoveLeft()
-    {
-        _rigidbody.MovePosition(_rigidbody.position - transform.right * _offsetSpeed * Time.fixedDeltaTime);
-    }
-
-    public void MoveRight()
-    {
-        _rigidbody.MovePosition(_rigidbody.position + transform.right * _offsetSpeed * Time.fixedDeltaTime);
+        public void MoveRight()
+        {
+            Move(transform.right);
+        }
     }
 }

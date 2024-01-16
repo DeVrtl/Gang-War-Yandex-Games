@@ -2,95 +2,110 @@ using Lean.Localization;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LanguageSwitch : MonoBehaviour
+namespace GangWar.Localization
 {
-    private const string Language = "Language";
-    private const string EnglishLanguage = "English";
-    private const string RussianLanguage = "Russian";
-    private const string TurkishLanguage = "Turkish";
-    private const int RussianLanguageIndex = 0;
-    private const int EnglishLanguageIndex = 1;
-    private const int TurkishLanguageIndex = 2;
-
-    [SerializeField] private Button _english;
-    [SerializeField] private Button _russian;
-    [SerializeField] private Button _turkish;
-
-    private int _languageIndex;
-
-    private void OnEnable()
+    public class LanguageSwitch : MonoBehaviour
     {
-        _english.onClick.AddListener(OnEnglishButtonClick);
-        _russian.onClick.AddListener(OnRussianButtonClick);
-        _turkish.onClick.AddListener(OnTurkishButtonClick);
-    }
+        private const string Language = "Language";
+        private const string EnglishLanguage = "English";
+        private const string RussianLanguage = "Russian";
+        private const string TurkishLanguage = "Turkish";
+        private const int RussianLanguageIndex = 0;
+        private const int EnglishLanguageIndex = 1;
+        private const int TurkishLanguageIndex = 2;
 
-    private void OnDisable()
-    {
-        _english.onClick.RemoveListener(OnEnglishButtonClick);
-        _russian.onClick.RemoveListener(OnRussianButtonClick);
-        _turkish.onClick.RemoveListener(OnTurkishButtonClick);
-    }
+        [SerializeField] private Button _english;
+        [SerializeField] private Button _russian;
+        [SerializeField] private Button _turkish;
 
-    private void Start()
-    {
-        if (PlayerPrefs.HasKey(Language))
+        private int _languageIndex;
+
+        private void OnEnable()
         {
-            _languageIndex = PlayerPrefs.GetInt(Language);
+            AddListeners();
+        }
 
-            switch (_languageIndex)
+        private void OnDisable()
+        {
+            RemoveListeners();
+        }
+
+        private void Start()
+        {
+            TryToGetCurrentLanguage();
+        }
+
+        private void AddListeners()
+        {
+            _english.onClick.AddListener(OnEnglishButtonClick);
+            _russian.onClick.AddListener(OnRussianButtonClick);
+            _turkish.onClick.AddListener(OnTurkishButtonClick);
+        }
+
+        private void RemoveListeners()
+        {
+            _english.onClick.RemoveListener(OnEnglishButtonClick);
+            _russian.onClick.RemoveListener(OnRussianButtonClick);
+            _turkish.onClick.RemoveListener(OnTurkishButtonClick);
+        }
+
+        private void TryToGetCurrentLanguage()
+        {
+            if (PlayerPrefs.HasKey(Language))
             {
-                case RussianLanguageIndex:
+                _languageIndex = PlayerPrefs.GetInt(Language);
 
-                    LeanLocalization.SetCurrentLanguageAll(RussianLanguage);
+                switch (_languageIndex)
+                {
+                    case RussianLanguageIndex:
 
-                    break;
+                        LeanLocalization.SetCurrentLanguageAll(RussianLanguage);
 
-                case EnglishLanguageIndex:
+                        break;
 
-                    LeanLocalization.SetCurrentLanguageAll(EnglishLanguage);
+                    case EnglishLanguageIndex:
 
-                    break;
+                        LeanLocalization.SetCurrentLanguageAll(EnglishLanguage);
 
-                case TurkishLanguageIndex:
+                        break;
 
-                    LeanLocalization.SetCurrentLanguageAll(TurkishLanguage);
+                    case TurkishLanguageIndex:
 
-                    break;
+                        LeanLocalization.SetCurrentLanguageAll(TurkishLanguage);
 
-                default:
+                        break;
 
-                    LeanLocalization.SetCurrentLanguageAll(RussianLanguage);
+                    default:
 
-                    break;
+                        LeanLocalization.SetCurrentLanguageAll(RussianLanguage);
+
+                        break;
+                }
             }
         }
-    }
 
-    private void OnEnglishButtonClick()
-    {
-        LeanLocalization.SetCurrentLanguageAll(EnglishLanguage);
+        private void SetAndSaveCurrentLanguage(int languageIndex, string languageName, string saveKey)
+        {
+            LeanLocalization.SetCurrentLanguageAll(languageName);
 
-        _languageIndex = EnglishLanguageIndex;
-        PlayerPrefs.SetInt(Language, _languageIndex);
-        PlayerPrefs.Save();
-    }
+            _languageIndex = languageIndex;
+            PlayerPrefs.SetInt(saveKey, _languageIndex);
+            PlayerPrefs.Save();
+        }
 
-    private void OnRussianButtonClick()
-    {
-        LeanLocalization.SetCurrentLanguageAll(RussianLanguage);
+        private void OnEnglishButtonClick()
+        {
+            SetAndSaveCurrentLanguage(EnglishLanguageIndex, EnglishLanguage, Language);
+        }
 
-        _languageIndex = RussianLanguageIndex;
-        PlayerPrefs.SetInt(Language, _languageIndex);
-        PlayerPrefs.Save();
-    }
+        private void OnRussianButtonClick()
+        {
+            SetAndSaveCurrentLanguage(RussianLanguageIndex, RussianLanguage, Language);
+        }
 
-    private void OnTurkishButtonClick()
-    {
-        LeanLocalization.SetCurrentLanguageAll(TurkishLanguage);
-
-        _languageIndex = TurkishLanguageIndex;
-        PlayerPrefs.SetInt(Language, _languageIndex);
-        PlayerPrefs.Save();
+        private void OnTurkishButtonClick()
+        {
+            SetAndSaveCurrentLanguage(TurkishLanguageIndex, TurkishLanguage, Language);
+        }
     }
 }

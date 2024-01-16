@@ -2,25 +2,37 @@ using Agava.YandexGames;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LeaderboardButton : MonoBehaviour
+namespace GangWar.LeaderBoard
 {
-    [SerializeField] private GameObject _authoriseCard;
-    [SerializeField] private GameObject _miscCard;
-    [SerializeField] private LeaderboardFiller _board;
-    [SerializeField] private Button _button;
-
-    private void OnEnable()
+    public class LeaderboardButton : MonoBehaviour
     {
-        _button.onClick.AddListener(OnButtonClick);
-    }
+        [SerializeField] private GameObject _authoriseCard;
+        [SerializeField] private GameObject _miscCard;
+        [SerializeField] private LeaderboardFiller _board;
+        [SerializeField] private Button _button;
 
-    private void OnDisable()
-    {
-        _button.onClick.RemoveListener(OnButtonClick);
-    }
+        private void OnEnable()
+        {
+            AddListener();
+        }
 
-    private void OnButtonClick()
-    {
+        private void OnDisable()
+        {
+            RemoveListener();
+        }
+
+        private void AddListener()
+        {
+            _button.onClick.AddListener(OnButtonClick);
+        }
+
+        private void RemoveListener()
+        {
+            _button.onClick.RemoveListener(OnButtonClick);
+        }
+
+        private void OnButtonClick()
+        {
 
 #if UNITY_WEBGL && !UNITY_EDITOR
         if (PlayerAccount.IsAuthorized == true)
@@ -34,5 +46,6 @@ public class LeaderboardButton : MonoBehaviour
             _miscCard.SetActive(false);
         }
 #endif
+        }
     }
 }

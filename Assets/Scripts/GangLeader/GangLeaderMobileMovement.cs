@@ -1,32 +1,31 @@
+using GangWar.UI.MobileMovement;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class GangLeaderMobileMovement : MonoBehaviour
+namespace GangWar.GangLeader
 {
-    [SerializeField] private float _speed;
-    [SerializeField] private GangLeaderSideMoves _sideMoves;
-    [SerializeField] private LeftArrowButton _leftArrow;
-    [SerializeField] private RightArrowButton _rightArrow;
-
-    private Rigidbody _rigidbody;
-
-    void Start()
+    public class GangLeaderMobileMovement : GangLeaderMovement
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _rigidbody.freezeRotation = true;
-    }
+        [SerializeField] private GangLeaderSideMoves _sideMoves;
+        [SerializeField] private LeftArrowButton _leftArrow;
+        [SerializeField] private RightArrowButton _rightArrow;
 
-    void FixedUpdate()
-    {
-        _rigidbody.MovePosition(_rigidbody.position + transform.forward * _speed * Time.fixedDeltaTime);
-
-        if (_leftArrow.IsPressed == true)
+        private void Start()
         {
-            _sideMoves.MoveLeft();
+            FreezeRotation();   
         }
-        if (_rightArrow.IsPressed == true)
+
+        void FixedUpdate()
         {
-            _sideMoves.MoveRight();
+            Move(transform.forward);
+
+            if (_leftArrow.IsPressed == true)
+            {
+                _sideMoves.MoveLeft();
+            }
+            if (_rightArrow.IsPressed == true)
+            {
+                _sideMoves.MoveRight();
+            }
         }
     }
 }

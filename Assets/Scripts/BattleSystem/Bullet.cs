@@ -1,19 +1,22 @@
-using UnityEngine;
-
-public abstract class Bullet : MonoBehaviour
+namespace GangWar.BattleSystem
 {
-    [SerializeField] private float _speed;
+    using UnityEngine;
 
-    [field: SerializeField] public int Damage;
-    [field: SerializeField] public ParticleSystem HitEffect;
-
-    private void Update()
+    public abstract class Bullet : MonoBehaviour
     {
-        transform.position += transform.forward * Time.deltaTime * _speed;
-    }
+        [SerializeField] private float _speed;
 
-    protected void SpawnHitEffect()
-    {
-        Instantiate(HitEffect, transform.position, Quaternion.identity);
+        [field: SerializeField] public int Damage;
+        [field: SerializeField] public ParticleSystem HitEffect;
+
+        private void Update()
+        {
+            transform.position += transform.forward * Time.deltaTime * _speed;
+        }
+
+        protected void SpawnHitEffect()
+        {
+            Instantiate(HitEffect, transform.position, Quaternion.identity);
+        }
     }
 }

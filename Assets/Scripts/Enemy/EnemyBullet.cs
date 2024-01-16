@@ -1,20 +1,25 @@
+using GangWar.BattleSystem;
+using GangWar.Unit;
 using UnityEngine;
 
-public class EnemyBullet : Bullet
+namespace GangWar.Enemy
 {
-    private void OnCollisionEnter(Collision collision)
+    public class EnemyBullet : Bullet
     {
-        if (collision.transform.TryGetComponent(out UnitHealth health))
+        private void OnCollisionEnter(Collision collision)
         {
-            health.TakeDamage(Damage);
-            gameObject.SetActive(false);
-            SpawnHitEffect();
-        }
+            if (collision.transform.TryGetComponent(out UnitHealth health))
+            {
+                health.TakeDamage(Damage);
+                gameObject.SetActive(false);
+                SpawnHitEffect();
+            }
 
-        if (collision.transform.TryGetComponent(out Border border))
-        {
-            gameObject.SetActive(false);
-            SpawnHitEffect();
+            if (collision.transform.TryGetComponent(out Border border))
+            {
+                gameObject.SetActive(false);
+                SpawnHitEffect();
+            }
         }
     }
 }

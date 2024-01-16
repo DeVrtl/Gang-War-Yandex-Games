@@ -1,36 +1,47 @@
+using GangWar.Player;
 using UnityEngine;
-using UnityEngine.Events;
+using System;
 
-public class Finish : MonoBehaviour
+namespace GangWar.Level
 {
-    [field: SerializeField] public AudioSource Source;
+    using GangWar.GangLeader;
 
-    [SerializeField] private GameObject _winCard;
-    [SerializeField] private GameObject _settingsButton;
-    [SerializeField] private GameObject _pauseButton;
-    [SerializeField] private PlayerWallet _wallet;
-
-    private const float _minTime = 0f;
-    private const int _rewardForComplete = 150;
-
-    public event UnityAction LevelCompleted;
-
-    private void OnTriggerEnter(Collider other)
+    public class Finish : MonoBehaviour
     {
-        if (other.TryGetComponent(out GangLeader leader))
+        [field: SerializeField] public AudioSource Source;
+
+        [SerializeField] private GameObject _winCard;
+        [SerializeField] private GameObject _settingsButton;
+        [SerializeField] private GameObject _pauseButton;
+        [SerializeField] private PlayerWallet _wallet;
+
+        private const float _minTime = 0f;
+        private const int _rewardForComplete = 150;
+
+        public event Action LevelCompleted;
+
+        private void OnTriggerEnter(Collider other)
         {
-            _wallet.AddMoney(_rewardForComplete);
+            CrossFinish(other);
+        }
 
-            LevelCompleted?.Invoke();
+        private void CrossFinish(Collider other)
+        {
+            if (other.TryGetComponent(out GangLeader leader))
+            {
+                _wallet.AddMoney(_rewardForComplete);
 
-            _winCard.SetActive(true);
+                LevelCompleted?.Invoke();
 
-            _settingsButton.SetActive(false);
-            _pauseButton.SetActive(false);
+                _winCard.SetActive(true);
 
-            Source.Play();
+                _settingsButton.SetActive(false);
+                _pauseButton.SetActive(false);
 
-            Time.timeScale = _minTime;
+                Source.Play();
+
+                Time.timeScale = _minTime;
+            }
         }
     }
 }

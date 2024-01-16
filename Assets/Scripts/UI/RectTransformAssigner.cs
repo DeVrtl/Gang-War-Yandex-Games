@@ -1,19 +1,27 @@
 using UnityEngine;
 
-[RequireComponent(typeof(RectTransform))]
-public class RectTransformAssigner : MonoBehaviour
+namespace GangWar.UI
 {
-    [SerializeField] private float _yPosition;
-
-    private RectTransform _rectTransform;
-
-    private void Awake()
+    [RequireComponent(typeof(RectTransform))]
+    public class RectTransformAssigner : MonoBehaviour
     {
-        _rectTransform = GetComponent<RectTransform>();
-    }
+        [SerializeField] private float _yPosition;
 
-    private void Start()
-    {
-        _rectTransform.anchoredPosition = new Vector2(_rectTransform.anchoredPosition.x, _yPosition);
+        private RectTransform _rectTransform;
+
+        private void Awake()
+        {
+            _rectTransform = GetComponent<RectTransform>();
+        }
+
+        private void Start()
+        {
+            Assign();
+        }
+
+        private void Assign()
+        {
+            _rectTransform.anchoredPosition = new Vector2(_rectTransform.anchoredPosition.x, _yPosition);
+        }
     }
 }

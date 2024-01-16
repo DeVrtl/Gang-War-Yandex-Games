@@ -1,21 +1,18 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class LeftArrowButton : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
+namespace GangWar.UI.MobileMovement
 {
-    [SerializeField] private RightArrowButton _rightButton;
-
-    public bool IsPressed { get; private set; }
-
-    public void OnPointerUp(PointerEventData eventData)
+    public class LeftArrowButton : ArrowButton, IPointerUpHandler, IPointerDownHandler
     {
-        _rightButton.gameObject.SetActive(true);
-        IsPressed = false;
-    }
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            Stop();
+        }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        IsPressed = true;
-        _rightButton.gameObject.SetActive(false);
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            Move();
+        }
     }
 }

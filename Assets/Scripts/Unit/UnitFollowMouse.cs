@@ -1,27 +1,45 @@
 using UnityEngine;
 
-public class UnitFollowMouse : MonoBehaviour
+namespace GangWar.Unit
 {
-    private Camera _main;
-    private Plane _floor;
-
-    private void Start()
+    public class UnitFollowMouse : MonoBehaviour
     {
-        _main = Camera.main;
+        private Camera _main;
+        private Plane _floor;
 
-        _floor = new Plane(Vector3.up, Vector3.zero);
-    }
-
-    private void Update()
-    {
-        Ray ray = _main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit) && _floor.Raycast(ray, out float distance))
+        private void Start()
         {
-            Vector3 hitPoint = ray.GetPoint(distance);
+            CameraAndFloorInitialize();
+        }
 
-            transform.position = hitPoint;
+        private void Update()
+        {
+            Follow();
+        }
+
+        public void StopFollow()
+        {
+            enabled = false;
+        }
+
+        private void Follow()
+        {
+            Ray ray = _main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit) && _floor.Raycast(ray, out float distance))
+            {
+                Vector3 hitPoint = ray.GetPoint(distance);
+
+                transform.position = hitPoint;
+            }
+        }
+
+        private void CameraAndFloorInitialize()
+        {
+            _main = Camera.main;
+
+            _floor = new Plane(Vector3.up, Vector3.zero);
         }
     }
 }
