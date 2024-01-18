@@ -9,6 +9,7 @@ namespace GangWar.UI.Pause
         private const float MaxTime = 1f;
 
         public event Action GamePaused;
+
         public event Action GameUnPaused;
 
         public void Enable()

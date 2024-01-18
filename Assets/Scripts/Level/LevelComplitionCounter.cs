@@ -1,5 +1,5 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 namespace GangWar.Level
 {
@@ -12,9 +12,9 @@ namespace GangWar.Level
 
         private int _currentLevelView;
 
-        public int CurrentLevel { get; private set; } = 1;
-
         public event Action<int> LevelChanged;
+
+        public int CurrentLevel { get; private set; } = 1;
 
         private void OnEnable()
         {

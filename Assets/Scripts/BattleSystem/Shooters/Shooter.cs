@@ -4,15 +4,25 @@ namespace GangWar.BattleSystem.Shooters
 
     public abstract class Shooter : MonoBehaviour
     {
-        [field: SerializeField] public ParticleSystem ShootEffect;
-        [field: SerializeField] public AudioSource Source;
-        [field: SerializeField] public ObjectPool BulletPool;
-        [field: SerializeField] public Transform Barrel;
-        [field: SerializeField] public float FireRate;
+        [SerializeField] private ParticleSystem _shootEffect;
+        [SerializeField] private AudioSource _source;
+        [SerializeField] private ObjectPool _bulletPool;
+        [SerializeField] private Transform _barrel;
+        [SerializeField] private float _fireRate;
+
+        public ParticleSystem ShootEffect => _shootEffect;
+
+        public AudioSource Source => _source;
+
+        public ObjectPool BulletPool => _bulletPool;
+
+        public Transform Barrel => _barrel; 
+
+        public float FireRate => _fireRate;
 
         public void SetPool(ObjectPool pool)
         {
-            BulletPool = pool;
+            _bulletPool = pool;
         }
     }
 }

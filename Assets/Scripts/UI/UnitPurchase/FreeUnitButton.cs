@@ -1,8 +1,8 @@
-using UnityEngine;
-using UnityEngine.UI;
 using System;
+using UnityEngine;
 using GangWar.Ad;
 using GangWar.Level;
+using UnityEngine.UI;
 
 namespace GangWar.UI.UnitPurchase
 {

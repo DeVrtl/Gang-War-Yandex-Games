@@ -1,13 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Agava.YandexGames;
 using Agava.WebUtility;
 using GangWar.GangLeader;
 using GangWar.UI.Settings.SFX;
+using GangWar.BattleSystem.Shooters;
 using GangWar.UI;
 using GangWar.Unit;
-using GangWar.BattleSystem.Shooters;
-using System;
 
 namespace GangWar.Game
 {
@@ -15,8 +15,7 @@ namespace GangWar.Game
     {
         private const float MaxTime = 1f;
 
-        [field: SerializeField] public ToggleSound SoundButton;
-
+        [SerializeField] private ToggleSound _soundButton;
         [SerializeField] private GameObject _pauseButton;
         [SerializeField] private PlayButton _playButton;
         [SerializeField] private GameObject _mobileInputCard;
@@ -24,11 +23,15 @@ namespace GangWar.Game
         [SerializeField] private GangLeaderKeyboardStrafe _keyboardStrafe;
         [SerializeField] private GangLeaderMobileMovement _bossMobileMovement;
 
+        public event Action GameInitiated;
+
         public List<Shooter> EnemyShoters { get; private set; } = new List<Shooter>();
+
         public List<UnitMove> UnitMoveForwards { get; private set; } = new List<UnitMove>();
+
         public List<Shooter> UnitShooters { get; private set; } = new List<Shooter>();
 
-        public event Action GameInitiated;
+        public ToggleSound SoundButton => _soundButton;
 
         private void OnEnable()
         {

@@ -19,6 +19,7 @@ namespace GangWar.Unit
                 gameObject.SetActive(false);
                 SpawnHitEffect();
             }
+
             if (collision.transform.TryGetComponent(out Border border))
             {
                 gameObject.SetActive(false);

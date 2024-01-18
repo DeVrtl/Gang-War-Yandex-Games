@@ -15,14 +15,14 @@ namespace GangWar.ParticleSystem
             Follow();
         }
 
-        private void Follow()
-        {
-            transform.position = _target.transform.position + _offset;
-        }
-
         public void SetTarget(Unit target)
         {
             _target = target;
+        }
+
+        private void Follow()
+        {
+            transform.position = _target.transform.position + _offset;
         }
     }
 }

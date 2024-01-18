@@ -1,6 +1,6 @@
-using GangWar.Player;
-using UnityEngine;
 using System;
+using UnityEngine;
+using GangWar.Player;
 
 namespace GangWar.Level
 {
@@ -8,15 +8,16 @@ namespace GangWar.Level
 
     public class Finish : MonoBehaviour
     {
-        [field: SerializeField] public AudioSource Source;
+        private const float MinTime = 0f;
+        private const int RewardForComplete = 150;
 
+        [SerializeField] private AudioSource _source;
         [SerializeField] private GameObject _winCard;
         [SerializeField] private GameObject _settingsButton;
         [SerializeField] private GameObject _pauseButton;
         [SerializeField] private PlayerWallet _wallet;
 
-        private const float _minTime = 0f;
-        private const int _rewardForComplete = 150;
+        public AudioSource Source => _source;
 
         public event Action LevelCompleted;
 
@@ -29,7 +30,7 @@ namespace GangWar.Level
         {
             if (other.TryGetComponent(out GangLeader leader))
             {
-                _wallet.AddMoney(_rewardForComplete);
+                _wallet.AddMoney(RewardForComplete);
 
                 LevelCompleted?.Invoke();
 
@@ -38,9 +39,9 @@ namespace GangWar.Level
                 _settingsButton.SetActive(false);
                 _pauseButton.SetActive(false);
 
-                Source.Play();
+                _source.Play();
 
-                Time.timeScale = _minTime;
+                Time.timeScale = MinTime;
             }
         }
     }

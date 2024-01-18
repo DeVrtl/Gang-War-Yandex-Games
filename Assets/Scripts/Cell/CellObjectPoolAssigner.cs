@@ -1,8 +1,8 @@
 using UnityEngine;
-using GangWar.BattleSystem.Shooters;
 
 namespace GangWar.Cell
 {
+    using GangWar.BattleSystem.Shooters;
     using GangWar.Unit;
 
     public class CellObjectPoolAssigner : MonoBehaviour

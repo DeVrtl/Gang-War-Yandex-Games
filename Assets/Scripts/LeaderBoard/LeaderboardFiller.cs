@@ -1,7 +1,7 @@
-using Agava.YandexGames;
-using GangWar.Level;
 using System.Collections.Generic;
 using UnityEngine;
+using GangWar.Level;
+using Agava.YandexGames;
 
 namespace GangWar.LeaderBoard
 {
@@ -16,10 +16,10 @@ namespace GangWar.LeaderBoard
         private const string TurkishCode = "tr";
         private const string LeaderboardName = "IDLeaderboard";
 
+        private readonly List<LeaderboardPlayer> _leaderboardPlayers = new List<LeaderboardPlayer>();
+
         [SerializeField] private LevelComplitionCounter _score;
         [SerializeField] private LeaderboardView _view;
-
-        private readonly List<LeaderboardPlayer> _leaderboardPlayers = new List<LeaderboardPlayer>();
 
         private void Start()
         {

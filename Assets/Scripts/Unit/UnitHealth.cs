@@ -1,7 +1,7 @@
-using GangWar.BattleSystem;
-using GangWar.UI.HealthBar;
 using System;
 using UnityEngine;
+using GangWar.BattleSystem;
+using GangWar.UI.HealthBar;
 
 namespace GangWar.Unit
 {
@@ -10,9 +10,15 @@ namespace GangWar.Unit
     {
         [SerializeField] private HealthBarFader _fader;
         
+        public event Action Died;
+
         public bool IsDead { get; private set; } = false;
 
-        public event Action Died;
+        public override void TakeDamage(int amount)
+        {
+            base.TakeDamage(amount);
+            _fader.FadeIn();
+        }
 
         protected override void CheackStatus()
         {
@@ -22,12 +28,6 @@ namespace GangWar.Unit
                 Died?.Invoke();
                 gameObject.SetActive(false);
             }
-        }
-
-        public override void TakeDamage(int amount)
-        {
-            base.TakeDamage(amount);
-            _fader.FadeIn();
         }
     }
 }

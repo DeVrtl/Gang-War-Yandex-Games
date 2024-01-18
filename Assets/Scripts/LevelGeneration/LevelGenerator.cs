@@ -1,7 +1,7 @@
-using GangWar.Game;
-using GangWar.Level;
 using System.Collections.Generic;
 using UnityEngine;
+using GangWar.Game;
+using GangWar.Level;
 
 namespace GangWar.LevelGeneration
 {
@@ -57,7 +57,7 @@ namespace GangWar.LevelGeneration
             }
         }
 
-        public void GenerateLevel(EnemyContainer container)
+        private void GenerateLevel(EnemyContainer container)
         {
             EnemyContainer level = Instantiate(container);
 

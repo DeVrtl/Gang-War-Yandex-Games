@@ -1,5 +1,5 @@
-using Agava.YandexGames;
 using UnityEngine.UI;
+using Agava.YandexGames;
 using UnityEngine;
 
 namespace GangWar.LeaderBoard

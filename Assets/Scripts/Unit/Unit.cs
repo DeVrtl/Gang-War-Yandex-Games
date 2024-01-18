@@ -7,9 +7,9 @@ namespace GangWar.Unit
     [RequireComponent(typeof(Shooter), typeof(UnitHealth))]
     public class Unit : MonoBehaviour
     {
-        [field: SerializeField] public UnitClass Class;
-
         [SerializeField] private ParticleSystemHandler _particleSystemHandler;
+
+        [field: SerializeField] public UnitClass Class { get; private set; }
 
         public ParticleSystemHandler SpawnedHandler { get; private set; }
 

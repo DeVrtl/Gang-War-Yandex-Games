@@ -1,5 +1,5 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 namespace GangWar.UI.Settings
 {
@@ -14,6 +14,7 @@ namespace GangWar.UI.Settings
         private CanvasGroup _group;
 
         public event Action SettingsCardOpened;
+
         public event Action SettingsCardClosed;
 
         private void Awake()

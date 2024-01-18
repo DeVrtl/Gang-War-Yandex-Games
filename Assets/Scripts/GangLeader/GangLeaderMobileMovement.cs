@@ -11,10 +11,10 @@ namespace GangWar.GangLeader
 
         private void Start()
         {
-            FreezeRotation();   
+            FreezeRotation();
         }
 
-        void FixedUpdate()
+        private void FixedUpdate()
         {
             Move(transform.forward);
 

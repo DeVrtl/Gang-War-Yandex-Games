@@ -1,5 +1,5 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 using GangWar.Level;
 
 namespace GangWar.Player
@@ -10,9 +10,9 @@ namespace GangWar.Player
 
         [SerializeField] private Finish _finish;
 
-        public int Amount { get; private set; } = 0;
-
         public event Action<int> MoneyChanged;
+
+        public int Amount { get; private set; } = 0;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -42,6 +42,24 @@ namespace GangWar.Player
             RaiseEvent();
         }
 
+        public void SaveMoney()
+        {
+            PlayerPrefs.SetInt(MoneyAmount, Amount);
+            PlayerPrefs.Save();
+        }
+
+        public void AddMoney(int money)
+        {
+            Amount += money;
+            MoneyChanged?.Invoke(Amount);
+        }
+
+        public void TakeMoney(int cost)
+        {
+            Amount -= cost;
+            MoneyChanged?.Invoke(Amount);
+        }
+
         private void Subcribe()
         {
             _finish.LevelCompleted += OnLevelCompleted;
@@ -68,24 +86,6 @@ namespace GangWar.Player
         private void OnLevelCompleted()
         {
             SaveMoney();
-        }
-
-        public void SaveMoney()
-        {
-            PlayerPrefs.SetInt(MoneyAmount, Amount);
-            PlayerPrefs.Save();
-        }
-
-        public void AddMoney(int money)
-        {
-            Amount += money;
-            MoneyChanged?.Invoke(Amount);
-        }
-
-        public void TakeMoney(int cost)
-        {
-            Amount -= cost;
-            MoneyChanged?.Invoke(Amount);
         }
     }
 }

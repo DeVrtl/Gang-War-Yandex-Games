@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace GangWar
 {
-
     [RequireComponent(typeof(MeshRenderer), typeof(MeshCollider))]
     public class Money : MonoBehaviour
     {
@@ -15,11 +14,6 @@ namespace GangWar
         private MeshCollider _collider;
 
         private void Awake()
-        {
-            GetComponents();
-        }
-
-        private void GetComponents()
         {
             _renderer = GetComponent<MeshRenderer>();
             _collider = GetComponent<MeshCollider>();

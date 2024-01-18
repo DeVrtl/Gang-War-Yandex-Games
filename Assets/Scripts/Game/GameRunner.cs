@@ -4,7 +4,6 @@ using GangWar.UI.Pause;
 using GangWar.UI.Settings;
 using GangWar.UI;
 using UnityEngine;
-using GangWar.Cell;
 
 namespace GangWar.Game
 {

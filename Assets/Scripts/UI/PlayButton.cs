@@ -1,8 +1,8 @@
-using GangWar.Cinemachine;
-using GangWar.UI.UnitPurchase;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using GangWar.Cinemachine;
+using GangWar.UI.UnitPurchase;
 
 namespace GangWar.UI
 {
@@ -15,9 +15,9 @@ namespace GangWar.UI
 
         private Button _button;
 
-        public bool IsGameStarted { get; private set; } = false;
-
         public event Action GameStarted;
+
+        public bool IsGameStarted { get; private set; } = false;
 
         private void OnEnable()
         {

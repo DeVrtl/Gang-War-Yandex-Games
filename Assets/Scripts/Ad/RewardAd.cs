@@ -1,6 +1,6 @@
 using Agava.YandexGames;
-using UnityEngine;
 using System;
+using UnityEngine;
 
 namespace GangWar.Ad
 {
@@ -8,9 +8,9 @@ namespace GangWar.Ad
     {
         [SerializeField] private AudioSource _music;
 
-        public bool IsAdPlaying { get; private set; } = false;
-
         public event Action VideoAdPlayed;
+
+        public bool IsAdPlaying { get; private set; } = false;
 
         public void ShowVideoAd()
         {

@@ -1,7 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Agava.YandexGames;
-using System.Collections;
 
 namespace GangWar
 {

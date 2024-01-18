@@ -1,9 +1,9 @@
 using UnityEngine;
-using Agava.WebUtility;
+using GangWar.Level;
 using UnityEngine.UI;
 using GangWar.UI.UnitPurchase;
 using GangWar.UI.UnitSelection;
-using GangWar.Level;
+using Agava.WebUtility;
 
 namespace GangWar.UI.Tutorial
 {

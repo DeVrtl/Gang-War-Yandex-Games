@@ -1,14 +1,14 @@
-using GangWar.Cell;
+using System;
+using UnityEngine;
 using GangWar.UI;
 using GangWar.Unit;
-using System;
-using System.Linq;
-using UnityEngine;
 
 namespace GangWar.Game
 {
     public class GameLoser : MonoBehaviour
     {
+        private const float MinTime = 0f;
+
         [SerializeField] private PlayButton _playButton;
         [SerializeField] private GameObject _pauseButton;
         [SerializeField] private GameObject _settingsButton;
@@ -16,8 +16,6 @@ namespace GangWar.Game
         [SerializeField] private UnitSpawner _spawner;
 
         public event Action GameLost;
-
-        private const float MinTime = 0f;
 
         private void OnEnable()
         {
@@ -39,7 +37,6 @@ namespace GangWar.Game
             foreach (var unit in _spawner.Units)
             {
                 unit.Health.Died += OnDied;
-                Debug.Log(unit);
             }
         }
 

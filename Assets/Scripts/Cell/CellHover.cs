@@ -13,6 +13,7 @@ namespace GangWar.Cell
         private BoxCollider _boxCollider;
 
         public MeshRenderer Renderer { get; private set; }
+
         public UnitFollowMouse UnitInCell { get; private set; }
 
         private void Awake()

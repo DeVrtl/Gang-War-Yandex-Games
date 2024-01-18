@@ -4,6 +4,5 @@ namespace GangWar.GangLeader
 {
     public class GangLeader : MonoBehaviour
     {
-
     }
 }

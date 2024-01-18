@@ -5,9 +5,12 @@ namespace GangWar.BattleSystem
     public abstract class Bullet : MonoBehaviour
     {
         [SerializeField] private float _speed;
+        [SerializeField] private int _damage;
+        [SerializeField] private ParticleSystem _hitEffect;
 
-        [field: SerializeField] public int Damage;
-        [field: SerializeField] public ParticleSystem HitEffect;
+        public int Damage => _damage;
+
+        public ParticleSystem HitEffect => _hitEffect;
 
         private void Update()
         {

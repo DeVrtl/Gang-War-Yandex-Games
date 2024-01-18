@@ -6,12 +6,13 @@ namespace GangWar.ParticleSystem
     [RequireComponent(typeof(ParticleSystemFollow))]
     public class ParticleSystemHandler : MonoBehaviour
     {
-        [field: SerializeField] public AudioSource Source;
-
+        [SerializeField] private AudioSource _source;
         [SerializeField] private ParticleSystem _effect;
 
         private UnitHealth _health;
         private ParticleSystemFollow _follow;
+
+        public AudioSource Source => _source;
 
         private void OnDisable()
         {
@@ -26,6 +27,12 @@ namespace GangWar.ParticleSystem
         private void Start()
         {
             Subcribe();
+        }
+
+        public void Initialize(UnitHealth health, Unit unit)
+        {
+            _health = health;
+            _follow.SetTarget(unit);
         }
 
         private void Subcribe()
@@ -48,13 +55,7 @@ namespace GangWar.ParticleSystem
             _follow.enabled = false;
 
             _effect.Play();
-            Source.Play();
-        }
-
-        public void Initialize(UnitHealth health, Unit unit)
-        {
-            _health = health;
-            _follow.SetTarget(unit);
+            _source.Play();
         }
     }
 }

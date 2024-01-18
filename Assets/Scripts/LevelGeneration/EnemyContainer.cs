@@ -1,12 +1,16 @@
-using GangWar.BattleSystem.Shooters;
 using System.Collections.Generic;
 using UnityEngine;
+using GangWar.BattleSystem.Shooters;
 
 namespace GangWar.LevelGeneration
 {
     public class EnemyContainer : MonoBehaviour
     {
-        [field: SerializeField] public List<Shooter> Shooters = new List<Shooter>();
-        [field: SerializeField] public List<AudioSource> Sources = new List<AudioSource>();
+        [SerializeField] private List<Shooter> _shooters = new List<Shooter>();
+        [SerializeField] private List<AudioSource> _sources = new List<AudioSource>();
+
+        public List<Shooter> Shooters => _shooters;
+
+        public List<AudioSource> Sources => _sources;
     }
 }

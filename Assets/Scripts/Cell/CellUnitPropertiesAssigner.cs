@@ -1,9 +1,9 @@
 using UnityEngine;
-using GangWar.Game;
-using GangWar.BattleSystem.Shooters;
 
 namespace GangWar.Cell
 {
+    using GangWar.Game;
+    using GangWar.BattleSystem.Shooters;
     using GangWar.Unit;
 
     public class CellUnitPropertiesAssigner : MonoBehaviour

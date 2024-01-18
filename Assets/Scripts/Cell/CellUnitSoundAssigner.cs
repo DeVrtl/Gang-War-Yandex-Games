@@ -1,9 +1,10 @@
 using UnityEngine;
-using GangWar.UI.Settings.SFX;
-using GangWar.BattleSystem.Shooters;
+
 
 namespace GangWar.Cell
 {
+    using GangWar.UI.Settings.SFX;
+    using GangWar.BattleSystem.Shooters;
     using GangWar.Unit;
 
     public class CellUnitSoundAssigner : MonoBehaviour

@@ -33,7 +33,6 @@ namespace GangWar.LeaderBoard
 
         private void OnButtonClick()
         {
-
 #if UNITY_WEBGL && !UNITY_EDITOR
         if (PlayerAccount.IsAuthorized == true)
         {

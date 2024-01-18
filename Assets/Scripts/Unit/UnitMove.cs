@@ -25,14 +25,14 @@ namespace GangWar.Unit
             Move();
         }
 
-        private void Move()
-        {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(_target.position.x, 0f, _target.position.z), _strafeSpeed * Time.deltaTime);
-        }
-
         public void SetTarget(Transform target)
         {
             _target = target;
+        }
+
+        private void Move()
+        {
+            transform.position = Vector3.Lerp(transform.position, new Vector3(_target.position.x, 0f, _target.position.z), _strafeSpeed * Time.deltaTime);
         }
     }
 }

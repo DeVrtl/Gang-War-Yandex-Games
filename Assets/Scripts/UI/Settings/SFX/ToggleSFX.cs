@@ -6,18 +6,15 @@ namespace GangWar.UI.Settings.SFX
 {
     public abstract class ToggleSFX : MonoBehaviour
     {
-        [field: SerializeField] public Image ImageToChange;
-        [field: SerializeField] public Sprite Original;
-        [field: SerializeField] public Sprite MuteIcon;
+        [SerializeField] private Image _imageToChange;
+        [SerializeField] private Sprite _original;
+        [SerializeField] private Sprite _muteIcon;
 
         public bool IsPressed { get; private set; } = false;
 
-        private void ChangeToggleState(bool isPressed, Sprite sprite)
-        {
-            IsPressed = isPressed;
+        public Sprite Original => _original;
 
-            ImageToChange.sprite = sprite;
-        }
+        public Sprite MuteIcon => _muteIcon;
 
         protected void ToggleOneAudioSource(bool isPressed, Sprite sprite, bool resualt, AudioSource source)
         {
@@ -33,10 +30,10 @@ namespace GangWar.UI.Settings.SFX
             Mute(state, audioSources);
         }
 
-        protected void Save(int SFXCondition, int resualt, string saveKey)
+        protected void Save(int sFXCondition, int resualt, string saveKey)
         {
-            SFXCondition = resualt;
-            PlayerPrefs.SetInt(saveKey, SFXCondition);
+            sFXCondition = resualt;
+            PlayerPrefs.SetInt(saveKey, sFXCondition);
             PlayerPrefs.Save();
         }
 
@@ -51,6 +48,13 @@ namespace GangWar.UI.Settings.SFX
 
                 source.mute = state;
             }
+        }
+
+        private void ChangeToggleState(bool isPressed, Sprite sprite)
+        {
+            IsPressed = isPressed;
+
+            _imageToChange.sprite = sprite;
         }
     }
 }

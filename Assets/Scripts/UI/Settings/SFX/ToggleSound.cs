@@ -1,7 +1,6 @@
-using GangWar.Level;
 using System.Collections.Generic;
+using GangWar.Level;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace GangWar.UI.Settings.SFX
 {
@@ -14,9 +13,9 @@ namespace GangWar.UI.Settings.SFX
         [SerializeField] private PlayButton _play;
         [SerializeField] private Finish _finish;
 
-        public List<AudioSource> AudioSources { get; private set; } = new List<AudioSource>();
-
         private int _isSoundMute = 0;
+
+        public List<AudioSource> AudioSources { get; private set; } = new List<AudioSource>();
 
         private void OnEnable()
         {

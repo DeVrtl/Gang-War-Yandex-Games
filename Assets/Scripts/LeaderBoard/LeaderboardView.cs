@@ -33,5 +33,4 @@ namespace GangWar.LeaderBoard
             _spawnedElements = new List<LeaderboardElement>();
         }
     }
-
 }

@@ -8,11 +8,6 @@ namespace GangWar.UI.UnitSelection
     [CreateAssetMenu(fileName = "UnitCardConfig", menuName = "Game/UnitCardConfig")]
     public class UnitCardConfigurator : ScriptableObject
     {
-        [field: SerializeField] public UnitSelectionCard UitSelectionButton { get; private set; }
-        [field: SerializeField] public Unit SmgUnit { get; private set; }
-        [field: SerializeField] public Unit ShotgunUnit { get; private set; }
-        [field: SerializeField] public Unit GranadeLauncherUnit { get; private set; }
-
         [SerializeField] private Sprite _smgIcon;
         [SerializeField] private Sprite _shotgunIcnon;
         [SerializeField] private Sprite _newShotGunIcon;
@@ -21,7 +16,14 @@ namespace GangWar.UI.UnitSelection
         [SerializeField] private string _smgDecription;
         [SerializeField] private string _shotgunDecription;
         [SerializeField] private string _granadeLauncherDecription;
-        [SerializeField] private UnitSpawner _spawner;
+
+        [field: SerializeField] public UnitSelectionCard UitSelectionButton { get; private set; }
+
+        [field: SerializeField] public Unit SmgUnit { get; private set; }
+
+        [field: SerializeField] public Unit ShotgunUnit { get; private set; }
+
+        [field: SerializeField] public Unit GranadeLauncherUnit { get; private set; }
 
         public void ConfigurateCardsForFirstLevelOrDefualt(List<UnitSelectionCard> selectionButtons)
         {
