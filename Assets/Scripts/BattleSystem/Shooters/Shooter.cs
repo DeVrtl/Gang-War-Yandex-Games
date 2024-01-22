@@ -16,7 +16,7 @@ namespace GangWar.BattleSystem.Shooters
 
         public ObjectPool BulletPool => _bulletPool;
 
-        public Transform Barrel => _barrel; 
+        public Transform Barrel => _barrel;
 
         public float FireRate => _fireRate;
 

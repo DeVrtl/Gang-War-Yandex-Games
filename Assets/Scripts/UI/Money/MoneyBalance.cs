@@ -1,6 +1,6 @@
-using UnityEngine;
-using TMPro;
 using GangWar.Player;
+using TMPro;
+using UnityEngine;
 
 namespace GangWar.UI.Money
 {

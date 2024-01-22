@@ -1,6 +1,6 @@
 using System;
-using UnityEngine;
 using GangWar.UI;
+using UnityEngine;
 
 namespace GangWar.Cell
 {

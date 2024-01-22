@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
 using GangWar.Game;
+using UnityEngine;
 
 namespace GangWar.Cell
 {

@@ -1,8 +1,8 @@
 using System;
-using UnityEngine;
-using UnityEngine.UI;
 using GangWar.Cinemachine;
 using GangWar.UI.UnitPurchase;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace GangWar.UI
 {

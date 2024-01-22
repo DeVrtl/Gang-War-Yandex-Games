@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
 using GangWar.BattleSystem.Shooters;
+using UnityEngine;
 
 namespace GangWar.LevelGeneration
 {

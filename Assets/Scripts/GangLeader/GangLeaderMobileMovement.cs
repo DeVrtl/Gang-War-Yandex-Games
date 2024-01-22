@@ -22,6 +22,7 @@ namespace GangWar.GangLeader
             {
                 _sideMoves.MoveLeft();
             }
+
             if (_rightArrow.IsPressed == true)
             {
                 _sideMoves.MoveRight();

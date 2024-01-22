@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using UnityEngine;
 using GangWar.Game;
 using GangWar.Level;
+using UnityEngine;
 
 namespace GangWar.LevelGeneration
 {

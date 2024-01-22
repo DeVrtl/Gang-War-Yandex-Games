@@ -1,7 +1,7 @@
 using System;
-using UnityEngine;
 using GangWar.BattleSystem;
 using GangWar.UI.HealthBar;
+using UnityEngine;
 
 namespace GangWar.Unit
 {
@@ -9,7 +9,7 @@ namespace GangWar.Unit
     public class UnitHealth : Health
     {
         [SerializeField] private HealthBarFader _fader;
-        
+
         public event Action Died;
 
         public bool IsDead { get; private set; } = false;

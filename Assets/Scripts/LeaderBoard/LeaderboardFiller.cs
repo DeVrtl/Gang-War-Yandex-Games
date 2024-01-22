@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using UnityEngine;
-using GangWar.Level;
 using Agava.YandexGames;
+using GangWar.Level;
+using UnityEngine;
 
 namespace GangWar.LeaderBoard
 {

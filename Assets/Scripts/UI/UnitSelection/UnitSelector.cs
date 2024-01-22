@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using GangWar.Level;
 using GangWar.Unit;
+using UnityEngine;
 
 namespace GangWar.UI.UnitSelection
 {

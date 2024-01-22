@@ -1,10 +1,10 @@
 using System;
-using UnityEngine;
-using GangWar.Player;
 
 namespace GangWar.Level
 {
+    using GangWar.Player;
     using GangWar.GangLeader;
+    using UnityEngine;
 
     public class Finish : MonoBehaviour
     {
@@ -17,9 +17,9 @@ namespace GangWar.Level
         [SerializeField] private GameObject _pauseButton;
         [SerializeField] private PlayerWallet _wallet;
 
-        public AudioSource Source => _source;
-
         public event Action LevelCompleted;
+
+        public AudioSource Source => _source;
 
         private void OnTriggerEnter(Collider other)
         {

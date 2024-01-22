@@ -1,6 +1,6 @@
 using System;
-using UnityEngine;
 using GangWar.Level;
+using UnityEngine;
 
 namespace GangWar.Player
 {

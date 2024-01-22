@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using Agava.YandexGames;
 using Agava.WebUtility;
 using GangWar.GangLeader;
-using GangWar.UI.Settings.SFX;
 using GangWar.BattleSystem.Shooters;
+using GangWar.UI.Settings.SFX;
 using GangWar.UI;
 using GangWar.Unit;
+using UnityEngine;
 
 namespace GangWar.Game
 {

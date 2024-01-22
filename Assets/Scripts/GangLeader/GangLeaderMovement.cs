@@ -21,7 +21,7 @@ namespace GangWar.GangLeader
 
         protected void Move(Vector3 direction)
         {
-            _rigidbody.MovePosition(_rigidbody.position + direction * (_speed * Time.fixedDeltaTime));
+            _rigidbody.MovePosition(_rigidbody.position + (direction * (_speed * Time.fixedDeltaTime)));
         }
     }
 }
